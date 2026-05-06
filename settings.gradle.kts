@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "os-info-kotlin"
+
