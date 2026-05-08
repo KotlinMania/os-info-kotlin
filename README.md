@@ -173,7 +173,7 @@ If you need support for more OS types, I am looking forward to your Pull Request
 
 ```kotlin
 dependencies {
-    implementation("io.github.kotlinmania:os-info-kotlin:0.1.0-SNAPSHOT")
+    implementation("io.github.kotlinmania:os-info-kotlin:0.1.0")
 }
 ```
 
