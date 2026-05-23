@@ -273,6 +273,10 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.8.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0")
+                // Upstream src/{aix,android,cygwin,dragonfly,emscripten,freebsd,illumos,ios,
+                // linux/{file_release,lsb_release},macos,netbsd,openbsd,redox,solaris,uname,
+                // unknown,windows}/mod.rs all `use log::{trace, error, warn, debug}`.
+                implementation("io.github.kotlinmania:log-kotlin:0.1.1")
             }
         }
         val commonTest by getting {
