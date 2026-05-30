@@ -276,7 +276,7 @@ kotlin {
                 // Upstream src/{aix,android,cygwin,dragonfly,emscripten,freebsd,illumos,ios,
                 // linux/{file_release,lsb_release},macos,netbsd,openbsd,redox,solaris,uname,
                 // unknown,windows}/mod.rs all `use log::{trace, error, warn, debug}`.
-                implementation("io.github.kotlinmania:log-kotlin:0.1.1")
+                implementation("io.github.kotlinmania:log-kotlin:0.1.3")
             }
         }
         val commonTest by getting {
