@@ -7,13 +7,14 @@ import kotlin.test.assertEquals
 class MatcherTest {
     @Test
     fun trimmed() {
-        val data = listOf(
-            "" to "",
-            "test" to "test",
-            " \t\t test" to "test",
-            "test  \t   " to "test",
-            "  test \t" to "test",
-        )
+        val data =
+            listOf(
+                "" to "",
+                "test" to "test",
+                " \t\t test" to "test",
+                "test  \t   " to "test",
+                "  test \t" to "test",
+            )
 
         val matcher = Matcher.AllTrimmed
 
@@ -25,15 +26,16 @@ class MatcherTest {
 
     @Test
     fun prefixedWord() {
-        val data: List<Pair<String, String?>> = listOf(
-            "" to null,
-            "test" to "",
-            "test1" to "1",
-            "test 1" to "1",
-            " test 1" to "1",
-            "test 1.2.3" to "1.2.3",
-            " \t\ttest 1.2.3" to "1.2.3",
-        )
+        val data: List<Pair<String, String?>> =
+            listOf(
+                "" to null,
+                "test" to "",
+                "test1" to "1",
+                "test 1" to "1",
+                " test 1" to "1",
+                "test 1.2.3" to "1.2.3",
+                " \t\ttest 1.2.3" to "1.2.3",
+            )
 
         val matcher = Matcher.PrefixedWord("test")
 
@@ -45,17 +47,18 @@ class MatcherTest {
 
     @Test
     fun prefixedVersion() {
-        val data: List<Pair<String, String?>> = listOf(
-            "" to null,
-            "test" to "",
-            "test 1" to "1",
-            "test .1" to null,
-            "test 1." to null,
-            "test .1." to null,
-            " test 1" to "1",
-            "test 1.2.3" to "1.2.3",
-            " \t\ttest 1.2.3" to "1.2.3",
-        )
+        val data: List<Pair<String, String?>> =
+            listOf(
+                "" to null,
+                "test" to "",
+                "test 1" to "1",
+                "test .1" to null,
+                "test 1." to null,
+                "test .1." to null,
+                " test 1" to "1",
+                "test 1.2.3" to "1.2.3",
+                " \t\ttest 1.2.3" to "1.2.3",
+            )
 
         val matcher = Matcher.PrefixedVersion("test")
 
@@ -67,14 +70,15 @@ class MatcherTest {
 
     @Test
     fun keyValue() {
-        val data: List<Pair<String, String?>> = listOf(
-            "" to null,
-            "key" to null,
-            "key=value" to "value",
-            "key=1" to "1",
-            "key=\"1\"" to "1",
-            "key=\"CentOS Linux\"" to "CentOS Linux",
-        )
+        val data: List<Pair<String, String?>> =
+            listOf(
+                "" to null,
+                "key" to null,
+                "key=value" to "value",
+                "key=1" to "1",
+                "key=\"1\"" to "1",
+                "key=\"CentOS Linux\"" to "CentOS Linux",
+            )
 
         val matcher = Matcher.KeyValue("key")
 

@@ -202,47 +202,50 @@ enum class Type {
     Unknown,
 
     /** Windows (https://en.wikipedia.org/wiki/Microsoft_Windows). */
-    Windows;
+    Windows,
 
-    override fun toString(): String = when (this) {
-        Alpaquita -> "Alpaquita Linux"
-        Alpine -> "Alpine Linux"
-        AlmaLinux -> "AlmaLinux"
-        ALTLinux -> "ALT Linux"
-        Amazon -> "Amazon Linux AMI"
-        AOSC -> "AOSC OS"
-        Arch -> "Arch Linux"
-        Bluefin -> "Bluefin"
-        CachyOS -> "CachyOS Linux"
-        Artix -> "Artix Linux"
-        DragonFly -> "DragonFly BSD"
-        Elementary -> "Elementary OS"
-        Garuda -> "Garuda Linux"
-        Gentoo -> "Gentoo Linux"
-        Illumos -> "illumos"
-        InstantOS -> "instantOS"
-        Ios -> "iOS"
-        Kali -> "Kali Linux"
-        Macos -> "Mac OS"
-        MidnightBSD -> "Midnight BSD"
-        Mint -> "Linux Mint"
-        Nobara -> "Nobara Linux"
-        OpenEuler -> "EulerOS"
-        OpenSUSE -> "openSUSE"
-        OracleLinux -> "Oracle Linux"
-        PikaOS -> "PikaOS"
-        Pop -> "Pop!_OS"
-        Raspbian -> "Raspberry Pi OS"
-        Redhat -> "Red Hat Linux"
-        RedHatEnterprise -> "Red Hat Enterprise Linux"
-        RockyLinux -> "Rocky Linux"
-        SUSE -> "SUSE Linux Enterprise Server"
-        Ultramarine -> "Ultramarine Linux"
-        Uos -> "UOS"
-        Void -> "Void Linux"
-        Zorin -> "Zorin OS"
-        else -> name
-    }
+    ;
+
+    override fun toString(): String =
+        when (this) {
+            Alpaquita -> "Alpaquita Linux"
+            Alpine -> "Alpine Linux"
+            AlmaLinux -> "AlmaLinux"
+            ALTLinux -> "ALT Linux"
+            Amazon -> "Amazon Linux AMI"
+            AOSC -> "AOSC OS"
+            Arch -> "Arch Linux"
+            Bluefin -> "Bluefin"
+            CachyOS -> "CachyOS Linux"
+            Artix -> "Artix Linux"
+            DragonFly -> "DragonFly BSD"
+            Elementary -> "Elementary OS"
+            Garuda -> "Garuda Linux"
+            Gentoo -> "Gentoo Linux"
+            Illumos -> "illumos"
+            InstantOS -> "instantOS"
+            Ios -> "iOS"
+            Kali -> "Kali Linux"
+            Macos -> "Mac OS"
+            MidnightBSD -> "Midnight BSD"
+            Mint -> "Linux Mint"
+            Nobara -> "Nobara Linux"
+            OpenEuler -> "EulerOS"
+            OpenSUSE -> "openSUSE"
+            OracleLinux -> "Oracle Linux"
+            PikaOS -> "PikaOS"
+            Pop -> "Pop!_OS"
+            Raspbian -> "Raspberry Pi OS"
+            Redhat -> "Red Hat Linux"
+            RedHatEnterprise -> "Red Hat Enterprise Linux"
+            RockyLinux -> "Rocky Linux"
+            SUSE -> "SUSE Linux Enterprise Server"
+            Ultramarine -> "Ultramarine Linux"
+            Uos -> "UOS"
+            Void -> "Void Linux"
+            Zorin -> "Zorin OS"
+            else -> name
+        }
 
     companion object {
         /** Default value, equivalent to upstream `Default::default()`: returns [Unknown]. */
