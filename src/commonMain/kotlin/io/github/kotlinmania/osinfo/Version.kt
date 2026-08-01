@@ -16,23 +16,32 @@ sealed class Version : Comparable<Version> {
     data object Unknown : Version()
 
     /** Semantic version (major.minor.patch). */
-    data class Semantic(val major: ULong, val minor: ULong, val patch: ULong) : Version()
+    data class Semantic(
+        val major: ULong,
+        val minor: ULong,
+        val patch: ULong,
+    ) : Version()
 
     /** Rolling version. Optionally contains the release date in the string format. */
-    data class Rolling(val date: String?) : Version()
+    data class Rolling(
+        val date: String?,
+    ) : Version()
 
     /** Custom version format. */
-    data class Custom(val value: String) : Version()
+    data class Custom(
+        val value: String,
+    ) : Version()
 
-    final override fun toString(): String = when (this) {
-        is Unknown -> "Unknown"
-        is Semantic -> "$major.$minor.$patch"
-        is Rolling -> {
-            val datePart = date?.let { " ($it)" } ?: ""
-            "Rolling Release$datePart"
+    final override fun toString(): String =
+        when (this) {
+            is Unknown -> "Unknown"
+            is Semantic -> "$major.$minor.$patch"
+            is Rolling -> {
+                val datePart = date?.let { " ($it)" } ?: ""
+                "Rolling Release$datePart"
+            }
+            is Custom -> value
         }
-        is Custom -> value
-    }
 
     override fun compareTo(other: Version): Int {
         val a = ordinalOf(this)
@@ -85,28 +94,31 @@ sealed class Version : Comparable<Version> {
         /** Default value, equivalent to upstream `Default::default()`: returns [Unknown]. */
         fun default(): Version = Unknown
 
-        private fun ordinalOf(v: Version): Int = when (v) {
-            is Unknown -> 0
-            is Semantic -> 1
-            is Rolling -> 2
-            is Custom -> 3
-        }
+        private fun ordinalOf(v: Version): Int =
+            when (v) {
+                is Unknown -> 0
+                is Semantic -> 1
+                is Rolling -> 2
+                is Custom -> 3
+            }
 
-        private fun compareNullableStrings(a: String?, b: String?): Int = when {
-            a == null && b == null -> 0
-            a == null -> -1
-            b == null -> 1
-            else -> a.compareTo(b)
-        }
+        private fun compareNullableStrings(a: String?, b: String?): Int =
+            when {
+                a == null && b == null -> 0
+                a == null -> -1
+                b == null -> 1
+                else -> a.compareTo(b)
+            }
     }
 }
 
 private fun parseVersion(s: String): Triple<ULong, ULong, ULong>? {
-    val parts = s.trim().split('.').let {
-        // Mirror Rust's `split_terminator('.')` semantics: a trailing '.' produces no extra
-        // empty element after the final non-empty segment.
-        if (it.isNotEmpty() && it.last().isEmpty()) it.dropLast(1) else it
-    }
+    val parts =
+        s.trim().split('.').let {
+            // Mirror Rust's `split_terminator('.')` semantics: a trailing '.' produces no extra
+            // empty element after the final non-empty segment.
+            if (it.isNotEmpty() && it.last().isEmpty()) it.dropLast(1) else it
+        }
     val iter = parts.iterator()
 
     val majorStr = if (iter.hasNext()) iter.next() else return null

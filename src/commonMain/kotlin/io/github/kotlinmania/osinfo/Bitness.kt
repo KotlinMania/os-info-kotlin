@@ -22,11 +22,14 @@ enum class Bitness {
     X32,
 
     /** 64-bit. */
-    X64;
+    X64,
 
-    override fun toString(): String = when (this) {
-        Unknown -> "unknown bitness"
-        X32 -> "32-bit"
-        X64 -> "64-bit"
-    }
+    ;
+
+    override fun toString(): String =
+        when (this) {
+            Unknown -> "unknown bitness"
+            X32 -> "32-bit"
+            X64 -> "64-bit"
+        }
 }
