@@ -3,19 +3,22 @@ package io.github.kotlinmania.osinfo
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 class BitnessTest {
     @Test
-    fun display() {
-        val data: List<Pair<Bitness, String>> =
-            listOf(
-                Bitness.Unknown to "unknown bitness",
-                Bitness.X32 to "32-bit",
-                Bitness.X64 to "64-bit",
-            )
+    fun getBitness() {
+        assertNotEquals(
+            Bitness.Unknown,
+            io.github.kotlinmania.osinfo
+                .getBitness(),
+        )
+    }
 
-        for ((bitness, expected) in data) {
-            assertEquals(expected, bitness.toString())
-        }
+    @Test
+    fun display() {
+        assertEquals("unknown bitness", Bitness.Unknown.toString())
+        assertEquals("32-bit", Bitness.X32.toString())
+        assertEquals("64-bit", Bitness.X64.toString())
     }
 }

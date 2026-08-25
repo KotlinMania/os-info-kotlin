@@ -1,15 +1,8 @@
-// port-lint: source src/version.rs
+// port-lint: source version.rs
 package io.github.kotlinmania.osinfo
 
 /**
  * Operating system version.
- *
- * Upstream Rust derives `Debug`, `Clone`, `PartialEq`, `Eq`, `PartialOrd`, `Ord`, and `Hash`; the
- * sealed-class translation gets value equality and `hashCode` for free from `data class`/`data
- * object`, and lexicographic comparison for the `Semantic` variant is enabled by implementing
- * [Comparable]. `Serialize`/`Deserialize`/`JsonSchema` derives behind the `serde`/`schemars`
- * feature flags are translated as consumer-side serializer plug-ins, not as derives baked in
- * here.
  */
 sealed class Version : Comparable<Version> {
     /** Unknown version. */
@@ -115,8 +108,6 @@ sealed class Version : Comparable<Version> {
 private fun parseVersion(s: String): Triple<ULong, ULong, ULong>? {
     val parts =
         s.trim().split('.').let {
-            // Mirror Rust's `split_terminator('.')` semantics: a trailing '.' produces no extra
-            // empty element after the final non-empty segment.
             if (it.isNotEmpty() && it.last().isEmpty()) it.dropLast(1) else it
         }
     val iter = parts.iterator()

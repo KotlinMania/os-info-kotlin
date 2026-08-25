@@ -1,11 +1,8 @@
-// port-lint: source src/matcher.rs
+// port-lint: source matcher.rs
 package io.github.kotlinmania.osinfo
 
 /**
  * An implementation to match on simple strings.
- *
- * Upstream is annotated `#[allow(dead_code)]` because not every variant is exercised on every
- * target; that lint scope is irrelevant in Kotlin and is not preserved here.
  */
 sealed class Matcher {
     /** Considers the entire string (trimmed) to be the match. */
