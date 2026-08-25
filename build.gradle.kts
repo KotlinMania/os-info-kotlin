@@ -885,8 +885,7 @@ val publishToCentralPortal by tasks.registering {
 tasks.register("test") {
     group = "verification"
     description = "Runs the commonTest-backed KMP suite, Android host tests, and Swift Export smoke test."
-    dependsOn("allTests")
-    dependsOn("testAndroidHostTest")
+    dependsOn("hostTests")
     dependsOn("swiftExportSmokeTest")
 }
 
@@ -910,6 +909,23 @@ tasks.register("hostTests") {
         "wasmWasiNodeTest",
         "testAndroidHostTest",
     )
+}
+
+tasks.matching { it.name.contains("GenerateSPMPackage") }.configureEach {
+    doLast {
+        val packageSwift = file(layout.buildDirectory.dir("SPMPackage/macosArm64/Debug/Package.swift"))
+        if (packageSwift.exists()) {
+            val text = packageSwift.readText()
+            if (!text.contains("platforms:")) {
+                packageSwift.writeText(
+                    text.replaceFirst(
+                        Regex("(name:\\s*\"[^\"]*\",)"),
+                        "\$1\n    platforms: [.macOS(.v14)],",
+                    ),
+                )
+            }
+        }
+    }
 }
 
 // Swift Export smoke test — produces the SPM package via embedSwiftExportForXcode

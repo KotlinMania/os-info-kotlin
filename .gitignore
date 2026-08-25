@@ -22,9 +22,12 @@ tmp/
 # AST distance reports and binaries
 port_status_report.md
 high_priority_ports.md
+port_lint_proposed_changes.md
 ast_distance_*.txt
 .cache/
 *.lock
+swift-test-harness/.build/
+swift-test-harness/Package.resolved
 kotlin-js-store/*
 !kotlin-js-store/package.json
 !kotlin-js-store/yarn.lock

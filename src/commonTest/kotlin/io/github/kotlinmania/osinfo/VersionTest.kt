@@ -67,16 +67,8 @@ class VersionTest {
     }
 }
 
-/**
- * Test-only re-entry point that exercises the private parser used by [Version.fromString].
- * Mirrors the upstream `tests::parse_semantic_version` test which exercises the file-private
- * `parse_version` directly.
- */
-private fun parseVersionForTest(s: String): Triple<ULong, ULong, ULong>? {
-    // Re-derive the result through the public API path. fromString returns Semantic exactly when
-    // parse_version succeeds, and Custom/Unknown otherwise.
-    return when (val v = Version.fromString(s)) {
+private fun parseVersionForTest(s: String): Triple<ULong, ULong, ULong>? =
+    when (val v = Version.fromString(s)) {
         is Version.Semantic -> Triple(v.major, v.minor, v.patch)
         else -> null
     }
-}
