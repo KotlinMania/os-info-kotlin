@@ -46,5 +46,4 @@ osinfo-commonMain = [
   "android-system-properties",
   "log",
   "serde",
-  "windows-sys",
 ]

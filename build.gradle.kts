@@ -508,6 +508,9 @@ kotlin {
             implementation(libs.pretty.assertions)
             commonTestDependencyBundle?.let { implementation(it) }
         }
+        mingwX64Main.dependencies {
+            implementation(libs.windows.sys)
+        }
         if (benchmarkEnabled) {
             val commonBenchmark = maybeCreate("commonBenchmark")
             commonBenchmark.dependencies {
