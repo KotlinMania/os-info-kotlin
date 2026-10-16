@@ -2,13 +2,13 @@
 package io.github.kotlinmania.osinfo.netbsd
 
 import io.github.kotlinmania.osinfo.OsType
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class NetbsdTest {
     @Test
     fun osType() {
         val version = currentPlatform { "NetBSD" }
-        assertEquals(OsType.NetBSD, version.osType)
+        assertEq(OsType.NetBSD, version.osType)
     }
 }

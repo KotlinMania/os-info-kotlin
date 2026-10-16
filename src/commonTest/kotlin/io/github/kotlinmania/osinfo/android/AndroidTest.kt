@@ -2,13 +2,13 @@
 package io.github.kotlinmania.osinfo.android
 
 import io.github.kotlinmania.osinfo.OsType
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class AndroidTest {
     @Test
     fun osType() {
-        val version = currentPlatform { "14.0.0" }
-        assertEquals(OsType.Android, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.Android, version.osType)
     }
 }

@@ -1,6 +1,8 @@
 // port-lint: source info.rs
 package io.github.kotlinmania.osinfo
 
+import kotlinx.serialization.Serializable
+
 // spell-checker:ignore itertools, iproduct, bitnesses
 
 /**
@@ -16,6 +18,7 @@ package io.github.kotlinmania.osinfo
  * println("OS information: $info")
  * ```
  */
+@Serializable
 data class Info(
     val osType: OsType = OsType.Unknown,
     val version: Version = Version.Unknown,

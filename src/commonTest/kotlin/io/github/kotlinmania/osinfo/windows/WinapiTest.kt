@@ -3,10 +3,10 @@ package io.github.kotlinmania.osinfo.windows
 
 import io.github.kotlinmania.osinfo.Bitness
 import io.github.kotlinmania.osinfo.OsType
+import io.github.kotlinmania.prettyassertions.assertEq
+import io.github.kotlinmania.prettyassertions.assertNe
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -14,7 +14,7 @@ class WinapiTest {
     @Test
     fun version() {
         val info = get()
-        assertEquals(OsType.Windows, info.osType)
+        assertEq(OsType.Windows, info.osType)
     }
 
     @Test
@@ -48,14 +48,14 @@ class WinapiTest {
             info.wProductType = item[2] as Short
 
             val ed = edition(info)
-            assertEquals(item[3] as String, ed)
+            assertEq(item[3] as String, ed)
         }
     }
 
     @Test
     fun getBitness() {
         val b = bitness()
-        assertNotEquals(Bitness.Unknown, b)
+        assertNe(Bitness.Unknown, b)
     }
 
     @Test
@@ -108,7 +108,7 @@ class WinapiTest {
 
         for ((arch, expected) in cpuTypes) {
             nativeInfo.wProcessorArchitecture = arch
-            assertEquals(expected, architecture(nativeInfo))
+            assertEq(expected, architecture(nativeInfo))
         }
     }
 
@@ -129,7 +129,7 @@ class WinapiTest {
 
         for ((s, expected) in data) {
             val wide = toWide(s)
-            assertEquals(expected, wide)
+            assertEq(expected, wide)
         }
     }
 }

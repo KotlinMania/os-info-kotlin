@@ -1,20 +1,20 @@
 // port-lint: tests uname.rs
 package io.github.kotlinmania.osinfo
 
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class UnameTest {
     @Test
     fun unameFields() {
-        assertEquals("-s", UnameField.Sysname.cliArgName())
-        assertEquals("-r", UnameField.Release.cliArgName())
-        assertEquals("-v", UnameField.Version.cliArgName())
-        assertEquals("-m", UnameField.Machine.cliArgName())
-        assertEquals("-n", UnameField.Nodename.cliArgName())
-        assertEquals("-o", UnameField.OperatingSystem.cliArgName())
+        assertEq("-s", UnameField.Sysname.cliArgName())
+        assertEq("-r", UnameField.Release.cliArgName())
+        assertEq("-v", UnameField.Version.cliArgName())
+        assertEq("-m", UnameField.Machine.cliArgName())
+        assertEq("-n", UnameField.Nodename.cliArgName())
+        assertEq("-o", UnameField.OperatingSystem.cliArgName())
 
         assertTrue(UnameField.Sysname.supportsUnameSyscall())
         assertFalse(UnameField.OperatingSystem.supportsUnameSyscall())

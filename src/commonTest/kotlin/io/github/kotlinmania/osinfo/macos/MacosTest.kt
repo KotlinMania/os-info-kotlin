@@ -3,33 +3,33 @@ package io.github.kotlinmania.osinfo.macos
 
 import io.github.kotlinmania.osinfo.OsType
 import io.github.kotlinmania.osinfo.Version
+import io.github.kotlinmania.prettyassertions.assertEq
+import io.github.kotlinmania.prettyassertions.assertNe
 import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 
 class MacosTest {
     @Test
     fun osType() {
         val version = currentPlatform(commandReleaseProvider = { swVersOutput() })
-        assertEquals(OsType.Macos, version.osType)
+        assertEq(OsType.Macos, version.osType)
     }
 
     @Test
     fun osVersion() {
         val ver = version { parse(swVersOutput()) }
-        assertNotEquals(Version.Unknown, ver)
+        assertNe(Version.Unknown, ver)
     }
 
     @Test
     fun stringProductVersion() {
         val version = productVersion(commandReleaseProvider = { parse(swVersOutput()) })
-        assertEquals("10.10.5", version)
+        assertEq("10.10.5", version)
     }
 
     @Test
     fun parseVersion() {
         val parseOutput = parse(swVersOutput())
-        assertEquals("10.10.5", parseOutput)
+        assertEq("10.10.5", parseOutput)
     }
 
     private fun swVersOutput(): String =
@@ -40,7 +40,7 @@ class MacosTest {
     @Test
     fun parseBetaVersion() {
         val parseOutput = parse(swVersOutputBeta())
-        assertEquals("10.15", parseOutput)
+        assertEq("10.15", parseOutput)
     }
 
     private fun swVersOutputBeta(): String =
@@ -51,7 +51,7 @@ class MacosTest {
     @Test
     fun parseDoubleDigitPatchVersion() {
         val parseOutput = parse(swVersOutputDoubleDigitPatchVersion())
-        assertEquals("10.15.21", parseOutput)
+        assertEq("10.15.21", parseOutput)
     }
 
     private fun swVersOutputDoubleDigitPatchVersion(): String =

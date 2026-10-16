@@ -1,9 +1,12 @@
 // port-lint: source os_type.rs
 package io.github.kotlinmania.osinfo
 
+import kotlinx.serialization.Serializable
+
 /**
  * A list of supported operating system types.
  */
+@Serializable
 enum class OsType {
     /** IBM AIX. */
     AIX,

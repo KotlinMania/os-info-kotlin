@@ -1,278 +1,278 @@
 // port-lint: tests linux/lsb_release.rs
 package io.github.kotlinmania.osinfo.linux
 
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class LsbReleaseTest {
     @Test
     fun debian() {
         val parseResults = parse(file())
-        assertEquals("Debian", parseResults.distribution)
-        assertEquals("7.8", parseResults.version)
-        assertEquals("wheezy", parseResults.codename)
+        assertEq("Debian", parseResults.distribution)
+        assertEq("7.8", parseResults.version)
+        assertEq("wheezy", parseResults.codename)
     }
 
     @Test
     fun alpaquita() {
         val parseResults = parse(alpaquitaFile())
-        assertEquals("Alpaquita", parseResults.distribution)
-        assertEquals("23", parseResults.version)
+        assertEq("Alpaquita", parseResults.distribution)
+        assertEq("23", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun altlinux() {
         val parseResults = parse(altFile())
-        assertEquals("ALT", parseResults.distribution)
-        assertEquals("n/a", parseResults.version)
-        assertEquals("Salvia", parseResults.codename)
+        assertEq("ALT", parseResults.distribution)
+        assertEq("n/a", parseResults.version)
+        assertEq("Salvia", parseResults.codename)
     }
 
     @Test
     fun aosc() {
         val parseResults = parse(aoscFile())
-        assertEquals("AOSC", parseResults.distribution)
-        assertEquals("12.3.1", parseResults.version)
-        assertEquals("localhost", parseResults.codename)
+        assertEq("AOSC", parseResults.distribution)
+        assertEq("12.3.1", parseResults.version)
+        assertEq("localhost", parseResults.codename)
     }
 
     @Test
     fun arch() {
         val parseResults = parse(archFile())
-        assertEquals("Arch", parseResults.distribution)
-        assertEquals("rolling", parseResults.version)
+        assertEq("Arch", parseResults.distribution)
+        assertEq("rolling", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun artix() {
         val parseResults = parse(artixFile())
-        assertEquals("Artix", parseResults.distribution)
-        assertEquals("rolling", parseResults.version)
+        assertEq("Artix", parseResults.distribution)
+        assertEq("rolling", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun fedora() {
         val parseResults = parse(fedoraFile())
-        assertEquals("Fedora", parseResults.distribution)
-        assertEquals("26", parseResults.version)
-        assertEquals("TwentySix", parseResults.codename)
+        assertEq("Fedora", parseResults.distribution)
+        assertEq("26", parseResults.version)
+        assertEq("TwentySix", parseResults.codename)
     }
 
     @Test
     fun kali20232() {
         val parseResults = parse(kali20232File())
-        assertEquals("Kali", parseResults.distribution)
-        assertEquals("2023.2", parseResults.version)
-        assertEquals("kali-rolling", parseResults.codename)
+        assertEq("Kali", parseResults.distribution)
+        assertEq("2023.2", parseResults.version)
+        assertEq("kali-rolling", parseResults.codename)
     }
 
     @Test
     fun ubuntu() {
         val parseResults = parse(ubuntuFile())
-        assertEquals("Ubuntu", parseResults.distribution)
-        assertEquals("16.04", parseResults.version)
-        assertEquals("xenial", parseResults.codename)
+        assertEq("Ubuntu", parseResults.distribution)
+        assertEq("16.04", parseResults.version)
+        assertEq("xenial", parseResults.codename)
     }
 
     @Test
     fun mint() {
         val parseResults = parse(mintFile())
-        assertEquals("Linuxmint", parseResults.distribution)
-        assertEquals("20", parseResults.version)
-        assertEquals("ulyana", parseResults.codename)
+        assertEq("Linuxmint", parseResults.distribution)
+        assertEq("20", parseResults.version)
+        assertEq("ulyana", parseResults.codename)
     }
 
     @Test
     fun nixos() {
         val parseResults = parse(nixosFile())
-        assertEquals("NixOS", parseResults.distribution)
-        assertEquals("21.05pre275822.916ee862e87", parseResults.version)
-        assertEquals("okapi", parseResults.codename)
+        assertEq("NixOS", parseResults.distribution)
+        assertEq("21.05pre275822.916ee862e87", parseResults.version)
+        assertEq("okapi", parseResults.codename)
     }
 
     @Test
     fun nobara() {
         val parseResults = parse(nobaraFile())
-        assertEquals("NobaraLinux", parseResults.distribution)
-        assertEquals("39", parseResults.version)
+        assertEq("NobaraLinux", parseResults.distribution)
+        assertEq("39", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun uos() {
         val parseResults = parse(uosFile())
-        assertEquals("uos", parseResults.distribution)
-        assertEquals("20", parseResults.version)
-        assertEquals("eagle", parseResults.codename)
+        assertEq("uos", parseResults.distribution)
+        assertEq("20", parseResults.version)
+        assertEq("eagle", parseResults.codename)
     }
 
     @Test
     fun amazon1() {
         val parseResults = parse(amazon1File())
-        assertEquals("AmazonAMI", parseResults.distribution)
-        assertEquals("2018.03", parseResults.version)
+        assertEq("AmazonAMI", parseResults.distribution)
+        assertEq("2018.03", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun amazon2() {
         val parseResults = parse(amazon2File())
-        assertEquals("Amazon", parseResults.distribution)
-        assertEquals("2", parseResults.version)
-        assertEquals("Karoo", parseResults.codename)
+        assertEq("Amazon", parseResults.distribution)
+        assertEq("2", parseResults.version)
+        assertEq("Karoo", parseResults.codename)
     }
 
     @Test
     fun redhatEnterprise8() {
         val parseResults = parse(rhel8File())
-        assertEquals("RedHatEnterprise", parseResults.distribution)
-        assertEquals("8.1", parseResults.version)
-        assertEquals("Ootpa", parseResults.codename)
+        assertEq("RedHatEnterprise", parseResults.distribution)
+        assertEq("8.1", parseResults.version)
+        assertEq("Ootpa", parseResults.codename)
     }
 
     @Test
     fun redhatEnterprise7() {
         val parseResults = parse(rhel7File())
-        assertEquals("RedHatEnterpriseServer", parseResults.distribution)
-        assertEquals("7.7", parseResults.version)
-        assertEquals("Maipo", parseResults.codename)
+        assertEq("RedHatEnterpriseServer", parseResults.distribution)
+        assertEq("7.7", parseResults.version)
+        assertEq("Maipo", parseResults.codename)
     }
 
     @Test
     fun redhatEnterprise6() {
         val parseResults = parse(rhel6File())
-        assertEquals("RedHatEnterpriseServer", parseResults.distribution)
-        assertEquals("6.10", parseResults.version)
-        assertEquals("Santiago", parseResults.codename)
+        assertEq("RedHatEnterpriseServer", parseResults.distribution)
+        assertEq("6.10", parseResults.version)
+        assertEq("Santiago", parseResults.codename)
     }
 
     @Test
     fun suseEnterprise151() {
         val parseResults = parse(suseEnterprise151File())
-        assertEquals("SUSE", parseResults.distribution)
-        assertEquals("15.1", parseResults.version)
+        assertEq("SUSE", parseResults.distribution)
+        assertEq("15.1", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun suseEnterprise125() {
         val parseResults = parse(suseEnterprise125File())
-        assertEquals("SUSE", parseResults.distribution)
-        assertEquals("12.5", parseResults.version)
+        assertEq("SUSE", parseResults.distribution)
+        assertEq("12.5", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun openSuse151() {
         val parseResults = parse(openSuse151File())
-        assertEquals("openSUSE", parseResults.distribution)
-        assertEquals("15.1", parseResults.version)
+        assertEq("openSUSE", parseResults.distribution)
+        assertEq("15.1", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun oracleLinux75() {
         val parseResults = parse(oracleServerLinux75File())
-        assertEquals("OracleServer", parseResults.distribution)
-        assertEquals("7.5", parseResults.version)
+        assertEq("OracleServer", parseResults.distribution)
+        assertEq("7.5", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun oracleLinux81() {
         val parseResults = parse(oracleServerLinux81File())
-        assertEquals("OracleServer", parseResults.distribution)
-        assertEquals("8.1", parseResults.version)
+        assertEq("OracleServer", parseResults.distribution)
+        assertEq("8.1", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun popOs2004Lts() {
         val parseResults = parse(popOs2004LtsFile())
-        assertEquals("Pop", parseResults.distribution)
-        assertEquals("20.04", parseResults.version)
-        assertEquals("focal", parseResults.codename)
+        assertEq("Pop", parseResults.distribution)
+        assertEq("20.04", parseResults.version)
+        assertEq("focal", parseResults.codename)
     }
 
     @Test
     fun solus41() {
         val parseResults = parse(solus41File())
-        assertEquals("Solus", parseResults.distribution)
-        assertEquals("4.1", parseResults.version)
-        assertEquals("fortitude", parseResults.codename)
+        assertEq("Solus", parseResults.distribution)
+        assertEq("4.1", parseResults.version)
+        assertEq("fortitude", parseResults.codename)
     }
 
     @Test
     fun manjaro() {
         val parseResults = parse(manjaro1902File())
-        assertEquals("ManjaroLinux", parseResults.distribution)
-        assertEquals("19.0.2", parseResults.version)
+        assertEq("ManjaroLinux", parseResults.distribution)
+        assertEq("19.0.2", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun manjaroArm() {
         val parseResults = parse(manjaroArm2404())
-        assertEquals("Manjaro-ARM", parseResults.distribution)
-        assertEquals("24.04", parseResults.version)
+        assertEq("Manjaro-ARM", parseResults.distribution)
+        assertEq("24.04", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun mariner() {
         val parseResults = parse(marinerFile())
-        assertEquals("Mariner", parseResults.distribution)
-        assertEquals("2.0.20220210", parseResults.version)
-        assertEquals("Mariner", parseResults.codename)
+        assertEq("Mariner", parseResults.distribution)
+        assertEq("2.0.20220210", parseResults.version)
+        assertEq("Mariner", parseResults.codename)
     }
 
     @Test
     fun endeavouros() {
         val parseResults = parse(endeavourosFile())
-        assertEquals("EndeavourOS", parseResults.distribution)
-        assertEquals("rolling", parseResults.version)
+        assertEq("EndeavourOS", parseResults.distribution)
+        assertEq("rolling", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun ultramarine() {
         val parseResults = parse(ultramarineFile())
-        assertEquals("UltramarineLinux", parseResults.distribution)
-        assertEquals("39", parseResults.version)
-        assertEquals("kuma", parseResults.codename)
+        assertEq("UltramarineLinux", parseResults.distribution)
+        assertEq("39", parseResults.version)
+        assertEq("kuma", parseResults.codename)
     }
 
     @Test
     fun voidLinux() {
         val parseResults = parse(voidFile())
-        assertEquals("Void", parseResults.distribution)
-        assertEquals("rolling", parseResults.version)
+        assertEq("Void", parseResults.distribution)
+        assertEq("rolling", parseResults.version)
     }
 
     @Test
     fun raspbian() {
         val parseResults = parse(raspberryOsFile())
-        assertEquals("Raspbian", parseResults.distribution)
-        assertEquals("10", parseResults.version)
+        assertEq("Raspbian", parseResults.distribution)
+        assertEq("10", parseResults.version)
         assertNull(parseResults.codename)
     }
 
     @Test
     fun cachyos() {
         val parseResults = parse(cachyosFile())
-        assertEquals("cachyos", parseResults.distribution)
-        assertEquals("rolling", parseResults.version)
+        assertEq("cachyos", parseResults.distribution)
+        assertEq("rolling", parseResults.version)
     }
 
     @Test
     fun pikaos() {
         val parseResults = parse(pikaosFile())
-        assertEquals("Pika", parseResults.distribution)
-        assertEquals("4", parseResults.version)
+        assertEq("Pika", parseResults.distribution)
+        assertEq("4", parseResults.version)
     }
 
     private fun file(): String =

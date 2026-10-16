@@ -1,14 +1,19 @@
 // port-lint: source version.rs
 package io.github.kotlinmania.osinfo
 
+import kotlinx.serialization.Serializable
+
 /**
  * Operating system version.
  */
+@Serializable
 sealed class Version : Comparable<Version> {
     /** Unknown version. */
+    @Serializable
     data object Unknown : Version()
 
     /** Semantic version (major.minor.patch). */
+    @Serializable
     data class Semantic(
         val major: ULong,
         val minor: ULong,
@@ -16,11 +21,13 @@ sealed class Version : Comparable<Version> {
     ) : Version()
 
     /** Rolling version. Optionally contains the release date in the string format. */
+    @Serializable
     data class Rolling(
         val date: String?,
     ) : Version()
 
     /** Custom version format. */
+    @Serializable
     data class Custom(
         val value: String,
     ) : Version()

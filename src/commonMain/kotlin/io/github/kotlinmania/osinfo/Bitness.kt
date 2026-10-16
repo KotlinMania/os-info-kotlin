@@ -1,12 +1,15 @@
 // port-lint: source bitness.rs
 package io.github.kotlinmania.osinfo
 
+import kotlinx.serialization.Serializable
+
 // spell-checker:ignore getconf
 
 /**
  * Operating system architecture in terms of how many bits compose the basic values it can deal
  * with.
  */
+@Serializable
 enum class Bitness {
     /** Unknown bitness (unable to determine). */
     Unknown,

@@ -1,13 +1,13 @@
 // port-lint: tests os_type.rs
 package io.github.kotlinmania.osinfo
 
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class OsTypeTest {
     @Test
     fun default() {
-        assertEquals(OsType.Unknown, OsType.Unknown)
+        assertEq(OsType.Unknown, OsType.Unknown)
     }
 
     @Test
@@ -76,7 +76,7 @@ class OsTypeTest {
             )
 
         for ((t, expected) in data) {
-            assertEquals(expected, t.toString())
+            assertEq(expected, t.toString())
         }
     }
 }
