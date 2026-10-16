@@ -4,7 +4,7 @@ package io.github.kotlinmania.osinfo
 /**
  * An implementation to match on simple strings.
  */
-sealed class Matcher {
+internal sealed class Matcher {
     /** Considers the entire string (trimmed) to be the match. */
     data object AllTrimmed : Matcher()
 

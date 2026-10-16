@@ -1,8 +1,8 @@
 // port-lint: tests version.rs
 package io.github.kotlinmania.osinfo
 
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class VersionTest {
     @Test
@@ -25,8 +25,8 @@ class VersionTest {
             )
 
         for ((s, expected) in data) {
-            val result = parseVersionForTest(s)
-            assertEquals(expected, result, "input=$s")
+            val result = parseVersion(s)
+            assertEq(expected, result)
         }
     }
 
@@ -42,13 +42,13 @@ class VersionTest {
 
         for ((s, expected) in data) {
             val version = Version.fromString(s)
-            assertEquals(expected, version)
+            assertEq(expected, version)
         }
     }
 
     @Test
     fun default() {
-        assertEquals(Version.Unknown, Version.default())
+        assertEq(Version.Unknown, Version.default())
     }
 
     @Test
@@ -62,13 +62,7 @@ class VersionTest {
             )
 
         for ((version, expected) in data) {
-            assertEquals(expected, version.toString())
+            assertEq(expected, version.toString())
         }
     }
 }
-
-private fun parseVersionForTest(s: String): Triple<ULong, ULong, ULong>? =
-    when (val v = Version.fromString(s)) {
-        is Version.Semantic -> Triple(v.major, v.minor, v.patch)
-        else -> null
-    }

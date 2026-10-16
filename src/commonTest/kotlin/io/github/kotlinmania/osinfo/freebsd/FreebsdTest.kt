@@ -2,13 +2,13 @@
 package io.github.kotlinmania.osinfo.freebsd
 
 import io.github.kotlinmania.osinfo.OsType
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class FreebsdTest {
     @Test
     fun osType() {
-        val version = currentPlatform(sysnameProvider = { "FreeBSD" }, releaseProvider = { "13.0-RELEASE" })
-        assertEquals(OsType.FreeBSD, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.FreeBSD, version.osType())
     }
 }

@@ -1,20 +1,19 @@
 // port-lint: tests info.rs
 package io.github.kotlinmania.osinfo
 
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
 class InfoTest {
     @Test
     fun unknown() {
         val info = Info.unknown()
-        assertEquals(OsType.Unknown, info.osType)
-        assertEquals(Version.Unknown, info.version)
-        assertNull(info.edition)
-        assertNull(info.codename)
-        assertEquals(Bitness.Unknown, info.bitness)
-        assertNull(info.architecture)
+        assertEq(OsType.Unknown, info.osType())
+        assertEq(Version.Unknown, info.version())
+        assertEq(null, info.edition())
+        assertEq(null, info.codename())
+        assertEq(Bitness.Unknown, info.bitness())
+        assertEq(null, info.architecture())
     }
 
     @Test
@@ -67,13 +66,13 @@ class InfoTest {
 
         for (t in types) {
             val info = Info.withType(t)
-            assertEquals(t, info.osType)
+            assertEq(t, info.osType())
         }
     }
 
     @Test
     fun default() {
-        assertEquals(Info.default(), Info.unknown())
+        assertEq(Info.default(), Info.unknown())
     }
 
     @Test
@@ -106,7 +105,7 @@ class InfoTest {
             )
 
         for ((info, expected) in data) {
-            assertEquals(expected, info.toString())
+            assertEq(expected, info.toString())
         }
     }
 }

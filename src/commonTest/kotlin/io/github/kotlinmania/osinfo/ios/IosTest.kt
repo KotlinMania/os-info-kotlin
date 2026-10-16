@@ -2,13 +2,13 @@
 package io.github.kotlinmania.osinfo.ios
 
 import io.github.kotlinmania.osinfo.OsType
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class IosTest {
     @Test
     fun osType() {
-        val version = currentPlatform { "17.0" }
-        assertEquals(OsType.Ios, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.Ios, version.osType())
     }
 }

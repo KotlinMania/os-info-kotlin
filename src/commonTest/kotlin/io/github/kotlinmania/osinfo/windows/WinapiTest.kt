@@ -3,10 +3,10 @@ package io.github.kotlinmania.osinfo.windows
 
 import io.github.kotlinmania.osinfo.Bitness
 import io.github.kotlinmania.osinfo.OsType
+import io.github.kotlinmania.prettyassertions.assertEq
+import io.github.kotlinmania.prettyassertions.assertNe
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -14,13 +14,13 @@ class WinapiTest {
     @Test
     fun version() {
         val info = get()
-        assertEquals(OsType.Windows, info.osType)
+        assertEq(OsType.Windows, info.osType())
     }
 
     @Test
     fun getVersionInfo() {
-        val v = versionInfo()
-        assertNotNull(v)
+        val version = versionInfo()
+        assertNotNull(version)
     }
 
     @Test
@@ -37,25 +37,29 @@ class WinapiTest {
                 listOf(6L, 0L, VER_NT_WORKSTATION, "Windows Vista"),
                 listOf(6L, 0L, 0.toShort(), "Windows Server 2008"),
                 listOf(5L, 1L, 0.toShort(), "Windows XP"),
+                listOf(5L, 1L, 1.toShort(), "Windows XP"),
+                listOf(5L, 1L, 100.toShort(), "Windows XP"),
                 listOf(5L, 0L, 0.toShort(), "Windows 2000"),
+                listOf(5L, 0L, 1.toShort(), "Windows 2000"),
+                listOf(5L, 0L, 100.toShort(), "Windows 2000"),
             )
 
-        val info = versionInfo()!!
+        val info = checkNotNull(versionInfo())
 
         for (item in testData) {
             info.dwMajorVersion = item[0] as Long
             info.dwMinorVersion = item[1] as Long
             info.wProductType = item[2] as Short
 
-            val ed = edition(info)
-            assertEquals(item[3] as String, ed)
+            val edition = checkNotNull(edition(info))
+            assertEq(edition, item[3] as String)
         }
     }
 
     @Test
     fun getBitness() {
         val b = bitness()
-        assertNotEquals(Bitness.Unknown, b)
+        assertNe(b, Bitness.Unknown)
     }
 
     @Test
@@ -106,30 +110,31 @@ class WinapiTest {
 
         val nativeInfo = nativeSystemInfo()
 
-        for ((arch, expected) in cpuTypes) {
-            nativeInfo.wProcessorArchitecture = arch
-            assertEquals(expected, architecture(nativeInfo))
+        for (cpuType in cpuTypes) {
+            nativeInfo.wProcessorArchitecture = cpuType.first
+            assertEq(architecture(nativeInfo), cpuType.second)
         }
     }
 
     @Test
     fun getProductName() {
-        val v = versionInfo()!!
-        val prod = productName(v)!!
-        assertTrue(prod.isNotEmpty())
+        val version = checkNotNull(versionInfo()) { "version_info() failed" }
+        val edition = checkNotNull(productName(version)) { "edition() failed" }
+        assertTrue(edition.isNotEmpty())
     }
 
     @Test
     fun toWideStr() {
         val data =
             listOf(
-                "" to listOf(0u.toUShort()),
-                "U" to listOf('U'.code.toUShort(), 0u.toUShort()),
+                "" to listOf<UShort>(0x0000u),
+                "U" to listOf<UShort>(0x0055u, 0x0000u),
+                "你好" to listOf<UShort>(0x4F60u, 0x597Du, 0x0000u),
             )
 
         for ((s, expected) in data) {
             val wide = toWide(s)
-            assertEquals(expected, wide)
+            assertEq(wide, expected)
         }
     }
 }

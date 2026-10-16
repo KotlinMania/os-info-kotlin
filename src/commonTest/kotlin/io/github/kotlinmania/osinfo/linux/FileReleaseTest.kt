@@ -3,14 +3,17 @@ package io.github.kotlinmania.osinfo.linux
 
 import io.github.kotlinmania.osinfo.OsType
 import io.github.kotlinmania.osinfo.Version
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 class FileReleaseTest {
     private fun osRelease(content: String): (String) -> String? =
         { path -> if (path.endsWith("etc/os-release")) content else null }
+
+    private fun alpineReleaseFile(content: String): (String) -> String? =
+        { path -> if (path.endsWith("etc/alpine-release")) content else null }
 
     private fun centosRelease(content: String): (String) -> String? =
         { path -> if (path.endsWith("etc/centos-release")) content else null }
@@ -26,8 +29,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"AlmaLinux\"\nVERSION=\"9.0 (Emerald Quark)\"\nID=\"almalinux\"\nVERSION_ID=\"9.0\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.AlmaLinux, info.osType)
-        assertEquals(Version.Semantic(9u, 0u, 0u), info.version)
+        assertEq(OsType.AlmaLinux, info.osType)
+        assertEq(Version.Semantic(9u, 0u, 0u), info.version)
     }
 
     @Test
@@ -42,26 +45,35 @@ class FileReleaseTest {
                 "HOME_URL=\"https://bell-sw.com/alpaquita-linux/\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Alpaquita, info.osType)
-        assertEquals(Version.Semantic(23u, 0u, 0u), info.version)
+        assertEq(OsType.Alpaquita, info.osType)
+        assertEq(Version.Semantic(23u, 0u, 0u), info.version)
     }
 
     @Test
-    fun alpineOsRelease() {
-        val fileContent = "NAME=\"Alpine Linux\"\nID=alpine\nVERSION_ID=3.8.1\nPRETTY_NAME=\"Alpine Linux v3.8\"\n"
+    fun alpine312OsRelease() {
+        val fileContent = "NAME=\"Alpine Linux\"\nID=alpine\nVERSION_ID=3.12.0\nPRETTY_NAME=\"Alpine Linux v3.12\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Alpine, info.osType)
-        assertEquals(Version.Semantic(3u, 8u, 1u), info.version)
+        assertEq(OsType.Alpine, info.osType)
+        assertEq(Version.Semantic(3u, 12u, 0u), info.version)
     }
 
     @Test
-    fun altlinuxOsRelease() {
+    fun alpineRelease() {
+        val fileContent = "A.B.C\n"
+        val info = retrieve(DISTRIBUTIONS, "/", alpineReleaseFile(fileContent))
+        assertNotNull(info)
+        assertEq(OsType.Alpine, info.osType)
+        assertEq(Version.Custom("A.B.C"), info.version)
+    }
+
+    @Test
+    fun altP11OsRelease() {
         val fileContent = "NAME=\"ALT\"\nVERSION=\"11 (Salvia)\"\nID=altlinux\nVERSION_ID=11\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.ALTLinux, info.osType)
-        assertEquals(Version.Semantic(11u, 0u, 0u), info.version)
+        assertEq(OsType.ALTLinux, info.osType)
+        assertEq(Version.Semantic(11u, 0u, 0u), info.version)
     }
 
     @Test
@@ -69,8 +81,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Amazon Linux AMI\"\nVERSION=\"2018.03\"\nID=\"amzn\"\nVERSION_ID=\"2018.03\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Amazon, info.osType)
-        assertEquals(Version.Semantic(2018u, 3u, 0u), info.version)
+        assertEq(OsType.Amazon, info.osType)
+        assertEq(Version.Semantic(2018u, 3u, 0u), info.version)
     }
 
     @Test
@@ -78,8 +90,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Amazon Linux\"\nVERSION=\"2\"\nID=\"amzn\"\nVERSION_ID=\"2\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Amazon, info.osType)
-        assertEquals(Version.Semantic(2u, 0u, 0u), info.version)
+        assertEq(OsType.Amazon, info.osType)
+        assertEq(Version.Semantic(2u, 0u, 0u), info.version)
     }
 
     @Test
@@ -87,8 +99,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"AOSC OS\"\nVERSION=\"12.3.1\"\nID=\"aosc\"\nVERSION_ID=\"12.3.1\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.AOSC, info.osType)
-        assertEquals(Version.Semantic(12u, 3u, 1u), info.version)
+        assertEq(OsType.AOSC, info.osType)
+        assertEq(Version.Semantic(12u, 3u, 1u), info.version)
     }
 
     @Test
@@ -96,8 +108,17 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Arch Linux\"\nID=arch\nPRETTY_NAME=\"Arch Linux\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Arch, info.osType)
-        assertEquals(Version.Unknown, info.version)
+        assertEq(OsType.Arch, info.osType)
+        assertEq(Version.Unknown, info.version)
+    }
+
+    @Test
+    fun archarmOsRelease() {
+        val fileContent = "NAME=\"Arch Linux ARM\"\nID=archarm\nPRETTY_NAME=\"Arch Linux ARM\"\n"
+        val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
+        assertNotNull(info)
+        assertEq(OsType.Arch, info.osType)
+        assertEq(Version.Unknown, info.version)
     }
 
     @Test
@@ -105,8 +126,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Artix Linux\"\nID=artix\nPRETTY_NAME=\"Artix Linux\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Artix, info.osType)
-        assertEquals(Version.Unknown, info.version)
+        assertEq(OsType.Artix, info.osType)
+        assertEq(Version.Unknown, info.version)
     }
 
     @Test
@@ -114,8 +135,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Bluefin\"\nVERSION=\"41\"\nID=bluefin\nVERSION_ID=\"41\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Bluefin, info.osType)
-        assertEquals(Version.Semantic(41u, 0u, 0u), info.version)
+        assertEq(OsType.Bluefin, info.osType)
+        assertEq(Version.Semantic(41u, 0u, 0u), info.version)
     }
 
     @Test
@@ -123,8 +144,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"instantOS\"\nID=instantos\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.InstantOS, info.osType)
-        assertEquals(Version.Unknown, info.version)
+        assertEq(OsType.InstantOS, info.osType)
+        assertEq(Version.Unknown, info.version)
     }
 
     @Test
@@ -132,8 +153,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"CentOS Linux\"\nVERSION=\"7 (Core)\"\nID=\"centos\"\nVERSION_ID=\"7\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.CentOS, info.osType)
-        assertEquals(Version.Semantic(7u, 0u, 0u), info.version)
+        assertEq(OsType.CentOS, info.osType)
+        assertEq(Version.Semantic(7u, 0u, 0u), info.version)
     }
 
     @Test
@@ -141,8 +162,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"CentOS Stream\"\nVERSION=\"8\"\nID=\"centos\"\nVERSION_ID=\"8\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.CentOS, info.osType)
-        assertEquals(Version.Semantic(8u, 0u, 0u), info.version)
+        assertEq(OsType.CentOS, info.osType)
+        assertEq(Version.Semantic(8u, 0u, 0u), info.version)
     }
 
     @Test
@@ -150,8 +171,8 @@ class FileReleaseTest {
         val fileContent = "CentOS release XX\n"
         val info = retrieve(DISTRIBUTIONS, "/", centosRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.CentOS, info.osType)
-        assertEquals(Version.Custom("XX"), info.version)
+        assertEq(OsType.CentOS, info.osType)
+        assertEq(Version.Custom("XX"), info.version)
     }
 
     @Test
@@ -159,8 +180,8 @@ class FileReleaseTest {
         val fileContent = "CentOS release\n"
         val info = retrieve(DISTRIBUTIONS, "/", centosRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.CentOS, info.osType)
-        assertEquals(Version.Unknown, info.version)
+        assertEq(OsType.CentOS, info.osType)
+        assertEq(Version.Unknown, info.version)
     }
 
     @Test
@@ -168,8 +189,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Debian GNU/Linux\"\nVERSION_ID=\"11\"\nVERSION=\"11 (bullseye)\"\nID=debian\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Debian, info.osType)
-        assertEquals(Version.Semantic(11u, 0u, 0u), info.version)
+        assertEq(OsType.Debian, info.osType)
+        assertEq(Version.Semantic(11u, 0u, 0u), info.version)
     }
 
     @Test
@@ -177,8 +198,8 @@ class FileReleaseTest {
         val fileContent = "NAME=Fedora\nVERSION=\"32 (Workstation Edition)\"\nID=fedora\nVERSION_ID=32\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Fedora, info.osType)
-        assertEquals(Version.Semantic(32u, 0u, 0u), info.version)
+        assertEq(OsType.Fedora, info.osType)
+        assertEq(Version.Semantic(32u, 0u, 0u), info.version)
     }
 
     @Test
@@ -186,8 +207,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Fedora Linux\"\nVERSION=\"35 (Workstation Edition)\"\nID=fedora\nVERSION_ID=35\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Fedora, info.osType)
-        assertEquals(Version.Semantic(35u, 0u, 0u), info.version)
+        assertEq(OsType.Fedora, info.osType)
+        assertEq(Version.Semantic(35u, 0u, 0u), info.version)
     }
 
     @Test
@@ -195,8 +216,8 @@ class FileReleaseTest {
         val fileContent = "Fedora release 26 (Twenty Six)\n"
         val info = retrieve(DISTRIBUTIONS, "/", fedoraRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Fedora, info.osType)
-        assertEquals(Version.Semantic(26u, 0u, 0u), info.version)
+        assertEq(OsType.Fedora, info.osType)
+        assertEq(Version.Semantic(26u, 0u, 0u), info.version)
     }
 
     @Test
@@ -204,8 +225,8 @@ class FileReleaseTest {
         val fileContent = "Fedora release\n"
         val info = retrieve(DISTRIBUTIONS, "/", fedoraRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Fedora, info.osType)
-        assertEquals(Version.Unknown, info.version)
+        assertEq(OsType.Fedora, info.osType)
+        assertEq(Version.Unknown, info.version)
     }
 
     @Test
@@ -213,8 +234,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Kali GNU/Linux\"\nVERSION=\"2023.2\"\nID=kali\nVERSION_ID=\"2023.2\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Kali, info.osType)
-        assertEquals(Version.Semantic(2023u, 2u, 0u), info.version)
+        assertEq(OsType.Kali, info.osType)
+        assertEq(Version.Semantic(2023u, 2u, 0u), info.version)
     }
 
     @Test
@@ -222,8 +243,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Manjaro-ARM\"\nID=manjaro-arm\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Manjaro, info.osType)
-        assertEquals(Version.Unknown, info.version)
+        assertEq(OsType.Manjaro, info.osType)
+        assertEq(Version.Unknown, info.version)
     }
 
     @Test
@@ -231,8 +252,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"CBL-Mariner\"\nVERSION=\"2.0.20220210\"\nID=\"mariner\"\nVERSION_ID=\"2.0.20220210\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Mariner, info.osType)
-        assertEquals(Version.Semantic(2u, 0u, 20220210u), info.version)
+        assertEq(OsType.Mariner, info.osType)
+        assertEq(Version.Semantic(2u, 0u, 20220210u), info.version)
     }
 
     @Test
@@ -240,8 +261,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"CBL-Mariner\"\nID=\"mariner\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Mariner, info.osType)
-        assertEquals(Version.Unknown, info.version)
+        assertEq(OsType.Mariner, info.osType)
+        assertEq(Version.Unknown, info.version)
     }
 
     @Test
@@ -249,8 +270,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Linux Mint\"\nVERSION=\"20 (Ulyana)\"\nID=linuxmint\nVERSION_ID=\"20\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Mint, info.osType)
-        assertEquals(Version.Semantic(20u, 0u, 0u), info.version)
+        assertEq(OsType.Mint, info.osType)
+        assertEq(Version.Semantic(20u, 0u, 0u), info.version)
     }
 
     @Test
@@ -258,8 +279,8 @@ class FileReleaseTest {
         val fileContent = "NAME=NixOS\nVERSION=\"21.05pre275822.916ee862e87 (Okapi)\"\nID=nixos\nVERSION_ID=\"21.05pre275822.916ee862e87\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.NixOS, info.osType)
-        assertEquals(Version.Custom("21.05pre275822.916ee862e87"), info.version)
+        assertEq(OsType.NixOS, info.osType)
+        assertEq(Version.Custom("21.05pre275822.916ee862e87"), info.version)
     }
 
     @Test
@@ -267,8 +288,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Nobara Linux\"\nVERSION=\"39 (KDE Plasma)\"\nID=nobara\nVERSION_ID=\"39\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Nobara, info.osType)
-        assertEquals(Version.Semantic(39u, 0u, 0u), info.version)
+        assertEq(OsType.Nobara, info.osType)
+        assertEq(Version.Semantic(39u, 0u, 0u), info.version)
     }
 
     @Test
@@ -276,8 +297,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"UnionTech OS\"\nVERSION=\"20\"\nID=uos\nVERSION_ID=\"20\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Uos, info.osType)
-        assertEquals(Version.Semantic(20u, 0u, 0u), info.version)
+        assertEq(OsType.Uos, info.osType)
+        assertEq(Version.Semantic(20u, 0u, 0u), info.version)
     }
 
     @Test
@@ -304,8 +325,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"OpenCloudOS\"\nVERSION=\"8.6\"\nID=\"opencloudos\"\nVERSION_ID=\"8.6\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.OpenCloudOS, info.osType)
-        assertEquals(Version.Semantic(8u, 6u, 0u), info.version)
+        assertEq(OsType.OpenCloudOS, info.osType)
+        assertEq(Version.Semantic(8u, 6u, 0u), info.version)
     }
 
     @Test
@@ -313,8 +334,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"openEuler\"\nVERSION=\"22.03\"\nID=\"openeuler\"\nVERSION_ID=\"22.3\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.OpenEuler, info.osType)
-        assertEquals(Version.Semantic(22u, 3u, 0u), info.version)
+        assertEq(OsType.OpenEuler, info.osType)
+        assertEq(Version.Semantic(22u, 3u, 0u), info.version)
     }
 
     @Test
@@ -322,8 +343,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"openSUSE Tumbleweed\"\nVERSION=\"20230816\"\nID=\"opensuse-tumbleweed\"\nVERSION_ID=\"20230816\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.OpenSUSE, info.osType)
-        assertEquals(Version.Semantic(20230816u, 0u, 0u), info.version)
+        assertEq(OsType.OpenSUSE, info.osType)
+        assertEq(Version.Semantic(20230816u, 0u, 0u), info.version)
     }
 
     @Test
@@ -331,8 +352,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Oracle Linux Server\"\nVERSION=\"8.1\"\nID=\"ol\"\nVERSION_ID=\"8.1\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.OracleLinux, info.osType)
-        assertEquals(Version.Semantic(8u, 1u, 0u), info.version)
+        assertEq(OsType.OracleLinux, info.osType)
+        assertEq(Version.Semantic(8u, 1u, 0u), info.version)
     }
 
     @Test
@@ -340,8 +361,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Red Hat Enterprise Linux\"\nVERSION=\"8.2 (Ootpa)\"\nID=\"rhel\"\nVERSION_ID=\"8.2\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.RedHatEnterprise, info.osType)
-        assertEquals(Version.Semantic(8u, 2u, 0u), info.version)
+        assertEq(OsType.RedHatEnterprise, info.osType)
+        assertEq(Version.Semantic(8u, 2u, 0u), info.version)
     }
 
     @Test
@@ -349,8 +370,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Red Hat Enterprise Linux Server\"\nVERSION=\"7.9 (Maipo)\"\nID=\"rhel\"\nVERSION_ID=\"7.9\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.RedHatEnterprise, info.osType)
-        assertEquals(Version.Semantic(7u, 9u, 0u), info.version)
+        assertEq(OsType.RedHatEnterprise, info.osType)
+        assertEq(Version.Semantic(7u, 9u, 0u), info.version)
     }
 
     @Test
@@ -358,8 +379,8 @@ class FileReleaseTest {
         val fileContent = "Red Hat Enterprise Linux release XX (Santiago)\n"
         val info = retrieve(DISTRIBUTIONS, "/", redhatRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.RedHatEnterprise, info.osType)
-        assertEquals(Version.Custom("XX"), info.version)
+        assertEq(OsType.RedHatEnterprise, info.osType)
+        assertEq(Version.Custom("XX"), info.version)
     }
 
     @Test
@@ -367,8 +388,8 @@ class FileReleaseTest {
         val fileContent = "Red Hat Enterprise Linux release\n"
         val info = retrieve(DISTRIBUTIONS, "/", redhatRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.RedHatEnterprise, info.osType)
-        assertEquals(Version.Unknown, info.version)
+        assertEq(OsType.RedHatEnterprise, info.osType)
+        assertEq(Version.Unknown, info.version)
     }
 
     @Test
@@ -376,8 +397,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Rocky Linux\"\nVERSION=\"9.2 (Blue Onyx)\"\nID=\"rocky\"\nVERSION_ID=\"9.2\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.RockyLinux, info.osType)
-        assertEquals(Version.Semantic(9u, 2u, 0u), info.version)
+        assertEq(OsType.RockyLinux, info.osType)
+        assertEq(Version.Semantic(9u, 2u, 0u), info.version)
     }
 
     @Test
@@ -385,8 +406,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"SLES\"\nVERSION=\"12-SP5\"\nID=\"sles\"\nVERSION_ID=\"12.5\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.SUSE, info.osType)
-        assertEquals(Version.Semantic(12u, 5u, 0u), info.version)
+        assertEq(OsType.SUSE, info.osType)
+        assertEq(Version.Semantic(12u, 5u, 0u), info.version)
     }
 
     @Test
@@ -394,8 +415,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"SLES\"\nVERSION=\"15-SP2\"\nID=\"sles\"\nVERSION_ID=\"15.2\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.SUSE, info.osType)
-        assertEquals(Version.Semantic(15u, 2u, 0u), info.version)
+        assertEq(OsType.SUSE, info.osType)
+        assertEq(Version.Semantic(15u, 2u, 0u), info.version)
     }
 
     @Test
@@ -403,8 +424,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Ubuntu\"\nVERSION=\"18.10 (Cosmic Cuttlefish)\"\nID=ubuntu\nVERSION_ID=\"18.10\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Ubuntu, info.osType)
-        assertEquals(Version.Semantic(18u, 10u, 0u), info.version)
+        assertEq(OsType.Ubuntu, info.osType)
+        assertEq(Version.Semantic(18u, 10u, 0u), info.version)
     }
 
     @Test
@@ -412,8 +433,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Ultramarine Linux\"\nVERSION=\"39 (Kuma)\"\nID=ultramarine\nVERSION_ID=\"39\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Ultramarine, info.osType)
-        assertEquals(Version.Semantic(39u, 0u, 0u), info.version)
+        assertEq(OsType.Ultramarine, info.osType)
+        assertEq(Version.Semantic(39u, 0u, 0u), info.version)
     }
 
     @Test
@@ -421,8 +442,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"Void Linux\"\nID=\"void\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.Void, info.osType)
-        assertEquals(Version.Unknown, info.version)
+        assertEq(OsType.Void, info.osType)
+        assertEq(Version.Unknown, info.version)
     }
 
     @Test
@@ -430,8 +451,8 @@ class FileReleaseTest {
         val fileContent = "NAME=\"CachyOS\"\nID=cachyos\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.CachyOS, info.osType)
-        assertEquals(Version.Unknown, info.version)
+        assertEq(OsType.CachyOS, info.osType)
+        assertEq(Version.Unknown, info.version)
     }
 
     @Test
@@ -439,12 +460,12 @@ class FileReleaseTest {
         val fileContent = "NAME=\"PikaOS\"\nVERSION=\"4 (Nest)\"\nID=pika\nVERSION_ID=\"4\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
-        assertEquals(OsType.PikaOS, info.osType)
-        assertEquals(Version.Semantic(4u, 0u, 0u), info.version)
+        assertEq(OsType.PikaOS, info.osType)
+        assertEq(Version.Semantic(4u, 0u, 0u), info.version)
     }
 
     @Test
     fun releaseInfoDebug() {
-        assertEquals("etc/os-release", DISTRIBUTIONS[0].path)
+        assertEq("etc/os-release", DISTRIBUTIONS[0].path)
     }
 }

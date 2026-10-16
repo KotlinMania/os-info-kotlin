@@ -1,8 +1,8 @@
 // port-lint: tests matcher.rs
 package io.github.kotlinmania.osinfo
 
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class MatcherTest {
     @Test
@@ -20,7 +20,7 @@ class MatcherTest {
 
         for ((input, expected) in data) {
             val result = matcher.find(input)
-            assertEquals(expected, result, "input=<$input>")
+            assertEq(expected, result, "input=<$input>")
         }
     }
 
@@ -41,7 +41,7 @@ class MatcherTest {
 
         for ((input, expected) in data) {
             val result = matcher.find(input)
-            assertEquals(expected, result, "input=<$input>")
+            assertEq(expected, result, "input=<$input>")
         }
     }
 
@@ -64,7 +64,7 @@ class MatcherTest {
 
         for ((input, expected) in data) {
             val result = matcher.find(input)
-            assertEquals(expected, result, "input=<$input>")
+            assertEq(expected, result, "input=<$input>")
         }
     }
 
@@ -84,7 +84,7 @@ class MatcherTest {
 
         for ((input, expected) in data) {
             val result = matcher.find(input)
-            assertEquals(expected, result, "input=<$input>")
+            assertEq(expected, result, "input=<$input>")
         }
     }
 }

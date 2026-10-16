@@ -2,13 +2,13 @@
 package io.github.kotlinmania.osinfo.unknown
 
 import io.github.kotlinmania.osinfo.OsType
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class UnknownTest {
     @Test
     fun osType() {
         val version = currentPlatform()
-        assertEquals(OsType.Unknown, version.osType)
+        assertEq(OsType.Unknown, version.osType())
     }
 }

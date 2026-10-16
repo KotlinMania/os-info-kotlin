@@ -1,24 +1,28 @@
 // port-lint: tests bitness.rs
 package io.github.kotlinmania.osinfo
 
+import io.github.kotlinmania.prettyassertions.assertEq
+import io.github.kotlinmania.prettyassertions.assertNe
 import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 
 class BitnessTest {
     @Test
     fun getBitness() {
-        assertNotEquals(
-            Bitness.Unknown,
-            io.github.kotlinmania.osinfo
-                .getBitness(),
-        )
+        val b = Bitness.get()
+        assertNe(b, Bitness.Unknown)
     }
 
     @Test
     fun display() {
-        assertEquals("unknown bitness", Bitness.Unknown.toString())
-        assertEquals("32-bit", Bitness.X32.toString())
-        assertEquals("64-bit", Bitness.X64.toString())
+        val data =
+            listOf(
+                Bitness.Unknown to "unknown bitness",
+                Bitness.X32 to "32-bit",
+                Bitness.X64 to "64-bit",
+            )
+
+        for ((bitness, expected) in data) {
+            assertEq(bitness.toString(), expected)
+        }
     }
 }

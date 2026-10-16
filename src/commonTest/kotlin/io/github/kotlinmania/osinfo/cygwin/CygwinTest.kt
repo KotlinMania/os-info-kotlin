@@ -2,13 +2,13 @@
 package io.github.kotlinmania.osinfo.cygwin
 
 import io.github.kotlinmania.osinfo.OsType
+import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class CygwinTest {
     @Test
     fun osType() {
-        val version = currentPlatform { "3.3.4" }
-        assertEquals(OsType.Cygwin, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.Cygwin, version.osType())
     }
 }

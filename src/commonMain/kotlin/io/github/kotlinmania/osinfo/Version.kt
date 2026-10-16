@@ -1,14 +1,19 @@
 // port-lint: source version.rs
 package io.github.kotlinmania.osinfo
 
+import kotlinx.serialization.Serializable
+
 /**
  * Operating system version.
  */
+@Serializable
 sealed class Version : Comparable<Version> {
     /** Unknown version. */
+    @Serializable
     data object Unknown : Version()
 
     /** Semantic version (major.minor.patch). */
+    @Serializable
     data class Semantic(
         val major: ULong,
         val minor: ULong,
@@ -16,16 +21,18 @@ sealed class Version : Comparable<Version> {
     ) : Version()
 
     /** Rolling version. Optionally contains the release date in the string format. */
+    @Serializable
     data class Rolling(
         val date: String?,
     ) : Version()
 
     /** Custom version format. */
+    @Serializable
     data class Custom(
         val value: String,
     ) : Version()
 
-    final override fun toString(): String =
+    internal fun fmt(): String =
         when (this) {
             is Unknown -> "Unknown"
             is Semantic -> "$major.$minor.$patch"
@@ -35,6 +42,8 @@ sealed class Version : Comparable<Version> {
             }
             is Custom -> value
         }
+
+    final override fun toString(): String = fmt()
 
     override fun compareTo(other: Version): Int {
         val a = ordinalOf(this)
@@ -84,7 +93,6 @@ sealed class Version : Comparable<Version> {
             }
         }
 
-        /** Default value, equivalent to upstream `Default::default()`: returns [Unknown]. */
         fun default(): Version = Unknown
 
         private fun ordinalOf(v: Version): Int =
@@ -105,7 +113,7 @@ sealed class Version : Comparable<Version> {
     }
 }
 
-private fun parseVersion(s: String): Triple<ULong, ULong, ULong>? {
+internal fun parseVersion(s: String): Triple<ULong, ULong, ULong>? {
     val parts =
         s.trim().split('.').let {
             if (it.isNotEmpty() && it.last().isEmpty()) it.dropLast(1) else it

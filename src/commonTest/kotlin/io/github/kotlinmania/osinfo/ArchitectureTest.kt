@@ -7,9 +7,7 @@ import kotlin.test.assertTrue
 class ArchitectureTest {
     @Test
     fun unameNonempty() {
-        val valResult = getArchitecture()
-        if (valResult != null) {
-            assertTrue(valResult.isNotEmpty())
-        }
+        val value = checkNotNull(Architecture.get()) { "architecture::get() failed" }
+        assertTrue(value.isNotEmpty())
     }
 }
