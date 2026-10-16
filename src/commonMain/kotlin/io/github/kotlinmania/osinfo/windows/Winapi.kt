@@ -76,13 +76,17 @@ internal fun get(): Info {
 
 internal fun version(): Pair<Version, String?> =
     when (val v = versionInfo()) {
-        null -> Version.Unknown to null
-        else ->
+        null -> {
+            Version.Unknown to null
+        }
+
+        else -> {
             Version.Semantic(
                 v.dwMajorVersion.toULong(),
                 v.dwMinorVersion.toULong(),
                 v.dwBuildNumber.toULong(),
             ) to (productName(v) ?: edition(v))
+        }
     }
 
 internal fun nativeSystemInfo(): SystemInfo = SystemInfo()
@@ -158,19 +162,53 @@ internal fun edition(versionInfo: OsVersionInfoEx): String? =
                 "Windows 10"
             }
         }
-        versionInfo.dwMajorVersion == 10L && versionInfo.dwMinorVersion == 0L -> "Windows Server 2016"
+
+        versionInfo.dwMajorVersion == 10L && versionInfo.dwMinorVersion == 0L -> {
+            "Windows Server 2016"
+        }
+
         // Windows Vista, 7, 8 and 8.1.
-        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 3L && versionInfo.wProductType == VER_NT_WORKSTATION -> "Windows 8.1"
-        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 3L -> "Windows Server 2012 R2"
-        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 2L && versionInfo.wProductType == VER_NT_WORKSTATION -> "Windows 8"
-        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 2L -> "Windows Server 2012"
-        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 1L && versionInfo.wProductType == VER_NT_WORKSTATION -> "Windows 7"
-        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 1L -> "Windows Server 2008 R2"
-        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 0L && versionInfo.wProductType == VER_NT_WORKSTATION -> "Windows Vista"
-        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 0L -> "Windows Server 2008"
+        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 3L && versionInfo.wProductType == VER_NT_WORKSTATION -> {
+            "Windows 8.1"
+        }
+
+        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 3L -> {
+            "Windows Server 2012 R2"
+        }
+
+        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 2L && versionInfo.wProductType == VER_NT_WORKSTATION -> {
+            "Windows 8"
+        }
+
+        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 2L -> {
+            "Windows Server 2012"
+        }
+
+        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 1L && versionInfo.wProductType == VER_NT_WORKSTATION -> {
+            "Windows 7"
+        }
+
+        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 1L -> {
+            "Windows Server 2008 R2"
+        }
+
+        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 0L && versionInfo.wProductType == VER_NT_WORKSTATION -> {
+            "Windows Vista"
+        }
+
+        versionInfo.dwMajorVersion == 6L && versionInfo.dwMinorVersion == 0L -> {
+            "Windows Server 2008"
+        }
+
         // Windows 2000, Home Server, 2003 Server, 2003 R2 Server, XP and XP Professional x64.
-        versionInfo.dwMajorVersion == 5L && versionInfo.dwMinorVersion == 1L -> "Windows XP"
-        versionInfo.dwMajorVersion == 5L && versionInfo.dwMinorVersion == 0L -> "Windows 2000"
+        versionInfo.dwMajorVersion == 5L && versionInfo.dwMinorVersion == 1L -> {
+            "Windows XP"
+        }
+
+        versionInfo.dwMajorVersion == 5L && versionInfo.dwMinorVersion == 0L -> {
+            "Windows 2000"
+        }
+
         versionInfo.dwMajorVersion == 5L && versionInfo.dwMinorVersion == 2L -> {
             val info = nativeSystemInfo()
             if ((versionInfo.wSuiteMask.toInt() and 0xFFFF and VER_SUITE_WH_SERVER) == VER_SUITE_WH_SERVER) {
@@ -181,7 +219,10 @@ internal fun edition(versionInfo: OsVersionInfoEx): String? =
                 "Windows Server 2003"
             }
         }
-        else -> null
+
+        else -> {
+            null
+        }
     }
 
 internal fun getProcAddress(module: ByteArray, proc: ByteArray): FARPROC {

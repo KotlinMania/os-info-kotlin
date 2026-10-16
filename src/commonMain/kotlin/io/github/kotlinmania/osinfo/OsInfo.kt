@@ -24,5 +24,69 @@ package io.github.kotlinmania.osinfo
 fun get(): Info = currentPlatform()
 
 internal fun currentPlatform(): Info =
-    io.github.kotlinmania.osinfo.macos
-        .currentPlatform()
+    when (uname(UnameField.Sysname)) {
+        "AIX" -> {
+            io.github.kotlinmania.osinfo.aix
+                .currentPlatform()
+        }
+
+        "DragonFly" -> {
+            io.github.kotlinmania.osinfo.dragonfly
+                .currentPlatform()
+        }
+
+        "Emscripten" -> {
+            io.github.kotlinmania.osinfo.emscripten
+                .currentPlatform()
+        }
+
+        "FreeBSD", "MidnightBSD" -> {
+            io.github.kotlinmania.osinfo.freebsd
+                .currentPlatform()
+        }
+
+        "SunOS", "illumos" -> {
+            io.github.kotlinmania.osinfo.illumos
+                .currentPlatform()
+        }
+
+        "Linux" -> {
+            io.github.kotlinmania.osinfo.linux
+                .currentPlatform()
+        }
+
+        "Darwin" -> {
+            io.github.kotlinmania.osinfo.macos
+                .currentPlatform()
+        }
+
+        "NetBSD" -> {
+            io.github.kotlinmania.osinfo.netbsd
+                .currentPlatform()
+        }
+
+        "OpenBSD" -> {
+            io.github.kotlinmania.osinfo.openbsd
+                .currentPlatform()
+        }
+
+        "CYGWIN_NT" -> {
+            io.github.kotlinmania.osinfo.cygwin
+                .currentPlatform()
+        }
+
+        "Redox" -> {
+            io.github.kotlinmania.osinfo.redox
+                .currentPlatform()
+        }
+
+        "Windows_NT" -> {
+            io.github.kotlinmania.osinfo.windows
+                .currentPlatform()
+        }
+
+        else -> {
+            io.github.kotlinmania.osinfo.unknown
+                .currentPlatform()
+        }
+    }
