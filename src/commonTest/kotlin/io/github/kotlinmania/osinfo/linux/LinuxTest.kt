@@ -52,7 +52,10 @@ class LinuxTest {
             OsType.Void,
             OsType.Zorin,
             OsType.Mint,
-            -> Unit
+            -> {
+                return
+            }
+
             else -> {
                 fail("Unexpected OS type: ${version.osType()}")
             }

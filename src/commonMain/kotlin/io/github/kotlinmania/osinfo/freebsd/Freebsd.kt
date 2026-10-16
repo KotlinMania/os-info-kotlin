@@ -1,6 +1,9 @@
 // Transliterated from: freebsd/mod.rs
 package io.github.kotlinmania.osinfo.freebsd
 
+import io.github.kotlinmania.libc.unix.bsd.popen
+import io.github.kotlinmania.libc.unix.fgets
+import io.github.kotlinmania.libc.unix.pclose
 import io.github.kotlinmania.log.error
 import io.github.kotlinmania.log.formatArgs
 import io.github.kotlinmania.log.trace
@@ -30,21 +33,31 @@ internal fun currentPlatform(): Info {
     return info
 }
 
-internal fun getOs(hardeningCheck: String? = null): OsType =
+internal fun getOs(): OsType =
     when (uname(UnameField.Sysname)) {
-        "MidnightBSD" -> OsType.MidnightBSD
+        "MidnightBSD" -> {
+            OsType.MidnightBSD
+        }
+
         "FreeBSD" -> {
-            val checkHardening =
-                if (hardeningCheck == null) {
-                    error(formatArgs("Failed to invoke '/sbin/sysctl'"))
-                    return OsType.FreeBSD
-                } else {
-                    hardeningCheck
-                }
-            when (checkHardening) {
+            val stream = popen("/sbin/sysctl hardening.version 2>&1", "r")
+            if (stream == null) {
+                error(formatArgs("Failed to invoke '/sbin/sysctl'"))
+                return OsType.FreeBSD
+            }
+            val sb = StringBuilder()
+            while (true) {
+                val line = fgets(null, 256, stream) ?: break
+                sb.append(line)
+            }
+            pclose(stream)
+            when (sb.toString()) {
                 "0\n" -> OsType.HardenedBSD
                 else -> OsType.FreeBSD
             }
         }
-        else -> OsType.FreeBSD
+
+        else -> {
+            OsType.FreeBSD
+        }
     }

@@ -93,7 +93,7 @@ class WinapiTest {
     @Test
     fun procAddress() {
         val address = getProcAddress("ntdll\u0000".encodeToByteArray(), "RtlGetVersion\u0000".encodeToByteArray())
-        assertNotNull(address)
+        assertTrue(address != null)
     }
 
     @Test

@@ -34,13 +34,22 @@ sealed class Version : Comparable<Version> {
 
     internal fun fmt(): String =
         when (this) {
-            is Unknown -> "Unknown"
-            is Semantic -> "$major.$minor.$patch"
+            is Unknown -> {
+                "Unknown"
+            }
+
+            is Semantic -> {
+                "$major.$minor.$patch"
+            }
+
             is Rolling -> {
-                val datePart = date?.let { " ($it)" } ?: ""
+                val datePart = date?.let { " ($it)" }.orEmpty()
                 "Rolling Release$datePart"
             }
-            is Custom -> value
+
+            is Custom -> {
+                value
+            }
         }
 
     final override fun toString(): String = fmt()
@@ -50,7 +59,10 @@ sealed class Version : Comparable<Version> {
         val b = ordinalOf(other)
         if (a != b) return a.compareTo(b)
         return when {
-            this is Unknown && other is Unknown -> 0
+            this is Unknown && other is Unknown -> {
+                0
+            }
+
             this is Semantic && other is Semantic -> {
                 val maj = major.compareTo(other.major)
                 if (maj != 0) return maj
@@ -58,9 +70,18 @@ sealed class Version : Comparable<Version> {
                 if (min != 0) return min
                 patch.compareTo(other.patch)
             }
-            this is Rolling && other is Rolling -> compareNullableStrings(date, other.date)
-            this is Custom && other is Custom -> value.compareTo(other.value)
-            else -> 0
+
+            this is Rolling && other is Rolling -> {
+                compareNullableStrings(date, other.date)
+            }
+
+            this is Custom && other is Custom -> {
+                value.compareTo(other.value)
+            }
+
+            else -> {
+                0
+            }
         }
     }
 

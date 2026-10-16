@@ -1,6 +1,11 @@
 // port-lint: source linux/file_release.rs
 package io.github.kotlinmania.osinfo.linux
 
+import io.github.kotlinmania.libc.unix.access
+import io.github.kotlinmania.libc.unix.fclose
+import io.github.kotlinmania.libc.unix.fgets
+import io.github.kotlinmania.libc.unix.fopen
+import io.github.kotlinmania.libc.unix.linuxlike.F_OK
 import io.github.kotlinmania.log.formatArgs
 import io.github.kotlinmania.log.trace
 import io.github.kotlinmania.log.warn
@@ -30,8 +35,22 @@ internal fun retrieve(
                 }
                 provided
             } else {
-                warn(formatArgs("Unable to read {:?} file", pathStr))
-                continue
+                if (access(pathStr, F_OK) != 0) {
+                    trace(formatArgs("Path '{}' doesn't exist", releaseInfo.path))
+                    continue
+                }
+                val file = fopen(pathStr, "r")
+                if (file == null) {
+                    warn(formatArgs("Unable to open {:?} file", pathStr))
+                    continue
+                }
+                val sb = StringBuilder()
+                while (true) {
+                    val line = fgets(null, 1024, file) ?: break
+                    sb.append(line)
+                }
+                fclose(file)
+                sb.toString()
             }
 
         val osType = releaseInfo.osType(fileContent)
@@ -83,75 +102,197 @@ internal val DISTRIBUTIONS: List<ReleaseInfo> =
                     when (id) {
                         // os-release information collected from
                         // https://github.com/chef/os-release
-                        "almalinux" -> OsType.AlmaLinux
-                        "alpaquita" -> OsType.Alpaquita
-                        "alpine" -> OsType.Alpine
-                        "altlinux" -> OsType.ALTLinux
-                        "amzn" -> OsType.Amazon
+                        "almalinux" -> {
+                            OsType.AlmaLinux
+                        }
+
+                        "alpaquita" -> {
+                            OsType.Alpaquita
+                        }
+
+                        "alpine" -> {
+                            OsType.Alpine
+                        }
+
+                        "altlinux" -> {
+                            OsType.ALTLinux
+                        }
+
+                        "amzn" -> {
+                            OsType.Amazon
+                        }
+
                         // "antergos" -> Antergos
-                        "aosc" -> OsType.AOSC
-                        "arch" -> OsType.Arch
-                        "archarm" -> OsType.Arch
-                        "artix" -> OsType.Artix
-                        "bluefin" -> OsType.Bluefin
-                        "cachyos" -> OsType.CachyOS
-                        "centos" -> OsType.CentOS
+                        "aosc" -> {
+                            OsType.AOSC
+                        }
+
+                        "arch" -> {
+                            OsType.Arch
+                        }
+
+                        "archarm" -> {
+                            OsType.Arch
+                        }
+
+                        "artix" -> {
+                            OsType.Artix
+                        }
+
+                        "bluefin" -> {
+                            OsType.Bluefin
+                        }
+
+                        "cachyos" -> {
+                            OsType.CachyOS
+                        }
+
+                        "centos" -> {
+                            OsType.CentOS
+                        }
+
                         // "clear-linux-os" -> ClearLinuxOS
                         // "clearos" -> ClearOS
                         // "coreos"
                         // "cumulus-linux" -> Cumulus
                         "debian" -> {
                             // Check if it's actually Raspberry Pi OS
-                            if (release.contains("Raspbian")) {
+                            if (access("/etc/rpi-issue", F_OK) == 0) {
                                 OsType.Raspbian
                             } else {
                                 OsType.Debian
                             }
                         }
+
                         // "devuan" -> Devuan
-                        "elementary" -> OsType.Elementary
-                        "fedora" -> OsType.Fedora
+                        "elementary" -> {
+                            OsType.Elementary
+                        }
+
+                        "fedora" -> {
+                            OsType.Fedora
+                        }
+
                         // "gentoo" -> Gentoo
-                        "instantos" -> OsType.InstantOS
+                        "instantos" -> {
+                            OsType.InstantOS
+                        }
+
                         // "ios-xr" -> IosXr
-                        "kali" -> OsType.Kali
+                        "kali" -> {
+                            OsType.Kali
+                        }
+
                         // "mageia" -> Mageia
                         // "manjaro" -> Manjaro
-                        "manjaro-arm" -> OsType.Manjaro
-                        "linuxmint" -> OsType.Mint
-                        "mariner" -> OsType.Mariner
+                        "manjaro-arm" -> {
+                            OsType.Manjaro
+                        }
+
+                        "linuxmint" -> {
+                            OsType.Mint
+                        }
+
+                        "mariner" -> {
+                            OsType.Mariner
+                        }
+
                         // "nexus" -> Nexus
-                        "nixos" -> OsType.NixOS
-                        "nobara" -> OsType.Nobara
-                        "uos", "Uos" -> OsType.Uos
-                        "opencloudos" -> OsType.OpenCloudOS
-                        "openeuler", "openEuler" -> OsType.OpenEuler
-                        "ol" -> OsType.OracleLinux
-                        "opensuse" -> OsType.OpenSUSE
-                        "opensuse-leap" -> OsType.OpenSUSE
-                        "opensuse-microos" -> OsType.OpenSUSE
-                        "opensuse-tumbleweed" -> OsType.OpenSUSE
-                        "pika" -> OsType.PikaOS
+                        "nixos" -> {
+                            OsType.NixOS
+                        }
+
+                        "nobara" -> {
+                            OsType.Nobara
+                        }
+
+                        "uos", "Uos" -> {
+                            OsType.Uos
+                        }
+
+                        "opencloudos" -> {
+                            OsType.OpenCloudOS
+                        }
+
+                        "openeuler", "openEuler" -> {
+                            OsType.OpenEuler
+                        }
+
+                        "ol" -> {
+                            OsType.OracleLinux
+                        }
+
+                        "opensuse" -> {
+                            OsType.OpenSUSE
+                        }
+
+                        "opensuse-leap" -> {
+                            OsType.OpenSUSE
+                        }
+
+                        "opensuse-microos" -> {
+                            OsType.OpenSUSE
+                        }
+
+                        "opensuse-tumbleweed" -> {
+                            OsType.OpenSUSE
+                        }
+
+                        "pika" -> {
+                            OsType.PikaOS
+                        }
+
                         // "rancheros" -> RancherOS
                         // "raspbian" -> Raspbian
                         // note XBian also uses "raspbian"
-                        "rhel" -> OsType.RedHatEnterprise
-                        "rocky" -> OsType.RockyLinux
+                        "rhel" -> {
+                            OsType.RedHatEnterprise
+                        }
+
+                        "rocky" -> {
+                            OsType.RockyLinux
+                        }
+
                         // "sabayon" -> Sabayon
                         // "scientific" -> Scientific
                         // "slackware" -> Slackware
-                        "sled" -> OsType.SUSE // SUSE desktop
-                        "sles" -> OsType.SUSE
-                        "sles_sap" -> OsType.SUSE // SUSE SAP
-                        "ubuntu" -> OsType.Ubuntu
-                        "ultramarine" -> OsType.Ultramarine
+                        "sled" -> {
+                            OsType.SUSE
+                        }
+
+                        // SUSE desktop
+                        "sles" -> {
+                            OsType.SUSE
+                        }
+
+                        "sles_sap" -> {
+                            OsType.SUSE
+                        }
+
+                        // SUSE SAP
+                        "ubuntu" -> {
+                            OsType.Ubuntu
+                        }
+
+                        "ultramarine" -> {
+                            OsType.Ultramarine
+                        }
+
                         // "virtuozzo" -> Virtuozzo
-                        "void" -> OsType.Void
-                        "zorin" -> OsType.Zorin
+                        "void" -> {
+                            OsType.Void
+                        }
+
+                        "zorin" -> {
+                            OsType.Zorin
+                        }
+
                         // "XCP-ng" -> xcp-ng
                         // "xenenterprise" -> xcp-ng
                         // "xenserver" -> xcp-ng
-                        else -> null
+                        else -> {
+                            null
+                        }
                     }
                 }
             },

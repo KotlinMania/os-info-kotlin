@@ -1,6 +1,9 @@
 // Transliterated from: ios/mod.rs
 package io.github.kotlinmania.osinfo.ios
 
+import io.github.kotlinmania.libc.unix.fclose
+import io.github.kotlinmania.libc.unix.fgets
+import io.github.kotlinmania.libc.unix.fopen
 import io.github.kotlinmania.log.formatArgs
 import io.github.kotlinmania.log.trace
 import io.github.kotlinmania.osinfo.Bitness
@@ -36,4 +39,23 @@ internal fun version(): Version =
         else -> Version.fromString(v)
     }
 
-internal fun systemVersion(): String? = uname(UnameField.Release)
+internal fun systemVersion(): String? {
+    val file = fopen("/System/Library/CoreServices/SystemVersion.plist", "r")
+    if (file != null) {
+        val sb = StringBuilder()
+        while (true) {
+            val line = fgets(null, 1024, file) ?: break
+            sb.append(line)
+        }
+        fclose(file)
+        val ver =
+            Regex("<key>ProductVersion</key>\\s*<string>([^<]+)</string>")
+                .find(sb.toString())
+                ?.groupValues
+                ?.get(1)
+        if (ver != null) {
+            return ver
+        }
+    }
+    return uname(UnameField.Release)
+}

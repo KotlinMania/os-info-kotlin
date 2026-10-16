@@ -5,9 +5,9 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 26/26 (100.0%)
-- **Function parity:** 207/249 matched (target 259) — 83.1%
+- **Function parity:** 207/249 matched (target 260) — 83.1%
 - **Class/type parity:** 11/12 matched (target 48) — 91.7%
-- **Combined symbol parity:** 218/261 matched (target 307) — 83.5%
+- **Combined symbol parity:** 218/261 matched (target 308) — 83.5%
 - **Average inline-code cosine:** 0.35 (function body across 26 matched files)
 - **Average documentation cosine:** 0.25 (doc text across 26 matched files)
 - **Cheat-zeroed Files:** 0
@@ -59,7 +59,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Similarity:** 0.17
 - **Dependents:** 0
 - **Priority Score:** 40908.3
-- **Functions:** 4/8 matched (target 5)
+- **Functions:** 4/8 matched (target 6)
 - **Missing functions:** `get`, `get`, `get`, `get`
 - **Types:** 1/1 matched (target 2)
 - **Missing types:** _none_
@@ -152,9 +152,9 @@ Every matched file is listed below with function and type symbol parity.
 ### 11. ios.mod
 
 - **Target:** `ios.Ios`
-- **Similarity:** 0.29
+- **Similarity:** 0.30
 - **Dependents:** 0
-- **Priority Score:** 407.1
+- **Priority Score:** 407.0
 - **Functions:** 4/4 matched
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 1)
@@ -173,24 +173,24 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
 
-### 13. redox.mod
+### 13. freebsd.mod
 
-- **Target:** `redox.Redox`
-- **Similarity:** 0.31
+- **Target:** `freebsd.Freebsd`
+- **Similarity:** 0.34
 - **Dependents:** 0
-- **Priority Score:** 306.9
+- **Priority Score:** 306.6
 - **Functions:** 3/3 matched
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
 
-### 14. freebsd.mod
+### 14. redox.mod
 
-- **Target:** `freebsd.Freebsd`
-- **Similarity:** 0.36
+- **Target:** `redox.Redox`
+- **Similarity:** 0.34
 - **Dependents:** 0
-- **Priority Score:** 306.4
+- **Priority Score:** 306.6
 - **Functions:** 3/3 matched
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 1)

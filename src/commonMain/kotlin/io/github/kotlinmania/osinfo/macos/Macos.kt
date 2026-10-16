@@ -1,6 +1,11 @@
 // Transliterated from: macos/mod.rs
 package io.github.kotlinmania.osinfo.macos
 
+import io.github.kotlinmania.libc.unix.bsd.popen
+import io.github.kotlinmania.libc.unix.fclose
+import io.github.kotlinmania.libc.unix.fgets
+import io.github.kotlinmania.libc.unix.fopen
+import io.github.kotlinmania.libc.unix.pclose
 import io.github.kotlinmania.log.formatArgs
 import io.github.kotlinmania.log.trace
 import io.github.kotlinmania.log.warn
@@ -45,12 +50,20 @@ internal fun version(): Version =
         else -> Version.fromString(valResult)
     }
 
-internal fun productVersionFromFile(plistContent: String? = null): String? {
-    if (plistContent == null) {
-        warn(formatArgs("Failed to read SystemVersion.plist: FileNotFoundException"))
+internal fun productVersionFromFile(): String? {
+    val file = fopen("/System/Library/CoreServices/SystemVersion.plist", "r")
+    if (file == null) {
+        warn(formatArgs("Failed to read SystemVersion.plist"))
         return null
     }
-    if (!plistContent.contains("<plist") || !plistContent.contains("<dict>")) {
+    val sb = StringBuilder()
+    while (true) {
+        val line = fgets(null, 1024, file) ?: break
+        sb.append(line)
+    }
+    fclose(file)
+    val buffer = sb.toString()
+    if (!buffer.contains("<plist") || !buffer.contains("<dict>")) {
         warn(formatArgs("Failed to parse SystemVersion.plist"))
         return null
     }
@@ -58,7 +71,7 @@ internal fun productVersionFromFile(plistContent: String? = null): String? {
 
     val productVersion =
         Regex("<key>ProductVersion</key>\\s*<string>([^<]+)</string>")
-            .find(plistContent)
+            .find(buffer)
             ?.groupValues
             ?.get(1)
     if (productVersion == null) {
@@ -71,18 +84,27 @@ internal fun productVersionFromFile(plistContent: String? = null): String? {
 internal fun productVersion(): String? {
     val version = productVersionFromFile()
     if (version != null) {
-        trace(formatArgs("ProductVersion from SystemVersion.plist: {}", version))
+        trace(formatArgs("ProductVersion from SystemVersion.plist: {:?}", version))
         return version
     }
 
-    val output = uname(UnameField.Release)?.let { "ProductName:\tmacOS\nProductVersion:\t$it\n" }
-    return if (output != null) {
-        trace(formatArgs("sw_vers command returned {:?}", output))
-        parse(output)
-    } else {
-        warn(formatArgs("sw_vers command failed"))
-        null
+    val stream = popen("sw_vers", "r")
+    if (stream != null) {
+        val sb = StringBuilder()
+        while (true) {
+            val line = fgets(null, 1024, stream) ?: break
+            sb.append(line)
+        }
+        val status = pclose(stream)
+        val output = sb.toString()
+        if (status == 0 && output.isNotEmpty()) {
+            trace(formatArgs("sw_vers command returned {:?}", output))
+            return parse(output)
+        }
     }
+
+    warn(formatArgs("sw_vers command failed"))
+    return uname(UnameField.Release)?.let { parse("ProductVersion:\t$it\n") }
 }
 
 internal fun parse(swVersOutput: String): String? =
