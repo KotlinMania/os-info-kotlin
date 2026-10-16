@@ -8,7 +8,7 @@ import kotlin.test.Test
 class NetbsdTest {
     @Test
     fun osType() {
-        val version = currentPlatform { "NetBSD" }
-        assertEq(OsType.NetBSD, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.NetBSD, version.osType())
     }
 }

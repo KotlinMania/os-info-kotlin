@@ -10,7 +10,7 @@ class WindowsTest {
     @Test
     fun osType() {
         val version = currentPlatform()
-        assertEq(OsType.Windows, version.osType)
-        assertNotNull(version.edition)
+        assertEq(OsType.Windows, version.osType())
+        assertNotNull(version.edition())
     }
 }

@@ -3,18 +3,17 @@ package io.github.kotlinmania.osinfo
 
 import io.github.kotlinmania.prettyassertions.assertEq
 import kotlin.test.Test
-import kotlin.test.assertNull
 
 class InfoTest {
     @Test
     fun unknown() {
         val info = Info.unknown()
-        assertEq(OsType.Unknown, info.osType)
-        assertEq(Version.Unknown, info.version)
-        assertNull(info.edition)
-        assertNull(info.codename)
-        assertEq(Bitness.Unknown, info.bitness)
-        assertNull(info.architecture)
+        assertEq(OsType.Unknown, info.osType())
+        assertEq(Version.Unknown, info.version())
+        assertEq(null, info.edition())
+        assertEq(null, info.codename())
+        assertEq(Bitness.Unknown, info.bitness())
+        assertEq(null, info.architecture())
     }
 
     @Test
@@ -67,7 +66,7 @@ class InfoTest {
 
         for (t in types) {
             val info = Info.withType(t)
-            assertEq(t, info.osType)
+            assertEq(t, info.osType())
         }
     }
 

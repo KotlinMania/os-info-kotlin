@@ -1,45 +1,50 @@
-// port-lint: source freebsd/mod.rs
+// Transliterated from: freebsd/mod.rs
 package io.github.kotlinmania.osinfo.freebsd
 
+import io.github.kotlinmania.log.error
+import io.github.kotlinmania.log.formatArgs
+import io.github.kotlinmania.log.trace
+import io.github.kotlinmania.osinfo.Bitness
 import io.github.kotlinmania.osinfo.Info
 import io.github.kotlinmania.osinfo.OsType
 import io.github.kotlinmania.osinfo.UnameField
 import io.github.kotlinmania.osinfo.Version
-import io.github.kotlinmania.osinfo.getBitness
 import io.github.kotlinmania.osinfo.uname
 
-fun currentPlatform(
-    sysnameProvider: (() -> String?)? = null,
-    releaseProvider: (() -> String?)? = null,
-    sysctlProvider: (() -> String?)? = null,
-): Info {
+internal fun currentPlatform(): Info {
+    trace(formatArgs("freebsd::current_platform is called"))
+
     val version =
-        (releaseProvider?.invoke() ?: uname(UnameField.Release))
-            ?.let { Version.fromString(it) }
+        uname(UnameField.Release)
+            ?.let(Version::fromString)
             ?: Version.Unknown
 
-    return Info(
-        osType = getOs(sysnameProvider, sysctlProvider),
-        version = version,
-        bitness = getBitness(),
-    )
+    val info =
+        Info(
+            osType = getOs(),
+            version = version,
+            bitness = Bitness.get(),
+        )
+
+    trace(formatArgs("Returning {:?}", info))
+    return info
 }
 
-fun getOs(
-    sysnameProvider: (() -> String?)? = null,
-    sysctlProvider: (() -> String?)? = null,
-): OsType {
-    val sysname = sysnameProvider?.invoke() ?: uname(UnameField.Sysname)
-    return when (sysname) {
+internal fun getOs(hardeningCheck: String? = null): OsType =
+    when (uname(UnameField.Sysname)) {
         "MidnightBSD" -> OsType.MidnightBSD
         "FreeBSD" -> {
-            val checkHardening = sysctlProvider?.invoke()
-            if (checkHardening == "0\n" || checkHardening == "0") {
-                OsType.HardenedBSD
-            } else {
-                OsType.FreeBSD
+            val checkHardening =
+                if (hardeningCheck == null) {
+                    error(formatArgs("Failed to invoke '/sbin/sysctl'"))
+                    return OsType.FreeBSD
+                } else {
+                    hardeningCheck
+                }
+            when (checkHardening) {
+                "0\n" -> OsType.HardenedBSD
+                else -> OsType.FreeBSD
             }
         }
         else -> OsType.FreeBSD
     }
-}

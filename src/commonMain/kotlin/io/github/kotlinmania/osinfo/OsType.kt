@@ -8,185 +8,185 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 enum class OsType {
-    /** IBM AIX. */
+    /** IBM AIX (https://en.wikipedia.org/wiki/IBM%5FAIX). */
     AIX,
 
-    /** AlmaLinux. */
+    /** AlmaLinux (https://en.wikipedia.org/wiki/AlmaLinux). */
     AlmaLinux,
 
-    /** Alpaquita Linux. */
+    /** Alpaquita Linux (https://bell-sw.com/alpaquita-linux/). */
     Alpaquita,
 
-    /** Alpine Linux. */
+    /** Alpine Linux (https://en.wikipedia.org/wiki/Alpine%5FLinux). */
     Alpine,
 
-    /** ALT Linux. */
+    /** ALT Linux (https://en.wikipedia.org/wiki/ALT%5FLinux). */
     ALTLinux,
 
-    /** Amazon Linux AMI. */
+    /** Amazon Linux AMI (https://en.wikipedia.org/wiki/Amazon%5FMachine%5FImage#Amazon%5FLinux%5FAMI). */
     Amazon,
 
-    /** Android. */
+    /** Android (https://en.wikipedia.org/wiki/Android%5F(operating%5Fsystem)). */
     Android,
 
-    /** AOSC OS. */
+    /** AOSC OS (https://aosc.io/aosc-os/). */
     AOSC,
 
-    /** Arch Linux. */
+    /** Arch Linux (https://en.wikipedia.org/wiki/Arch%5FLinux). */
     Arch,
 
-    /** Artix Linux. */
+    /** Artix Linux (https://en.wikipedia.org/wiki/Artix%5FLinux). */
     Artix,
 
-    /** Bluefin. */
+    /** Bluefin (https://projectbluefin.io). */
     Bluefin,
 
-    /** CachyOS. */
+    /** CachyOS (https://en.wikipedia.org/wiki/Arch%5FLinux#Derivatives). */
     CachyOS,
 
-    /** CentOS. */
+    /** CentOS (https://en.wikipedia.org/wiki/CentOS). */
     CentOS,
 
-    /** Cygwin. */
+    /** Cygwin (https://en.wikipedia.org/wiki/Cygwin). */
     Cygwin,
 
-    /** Debian. */
+    /** Debian (https://en.wikipedia.org/wiki/Debian). */
     Debian,
 
-    /** DragonFly BSD. */
+    /** DragonFly BSD (https://en.wikipedia.org/wiki/DragonFly%5FBSD). */
     DragonFly,
 
-    /** Elementary OS. */
+    /** Elementary OS (https://en.wikipedia.org/wiki/Elementary%5FOS). */
     Elementary,
 
-    /** Emscripten. */
+    /** Emscripten (https://en.wikipedia.org/wiki/Emscripten). */
     Emscripten,
 
-    /** EndeavourOS. */
+    /** EndeavourOS (https://en.wikipedia.org/wiki/EndeavourOS). */
     EndeavourOS,
 
-    /** Fedora. */
+    /** Fedora (https://en.wikipedia.org/wiki/Fedora%5F(operating%5Fsystem)). */
     Fedora,
 
-    /** FreeBSD. */
+    /** FreeBSD (https://en.wikipedia.org/wiki/FreeBSD). */
     FreeBSD,
 
-    /** Garuda Linux. */
+    /** Garuda Linux (https://en.wikipedia.org/wiki/Garuda%5FLinux) */
     Garuda,
 
-    /** Gentoo Linux. */
+    /** Gentoo Linux (https://en.wikipedia.org/wiki/Gentoo%5FLinux). */
     Gentoo,
 
-    /** HardenedBSD. */
+    /** HardenedBSD (https://hardenedbsd.org/). */
     HardenedBSD,
 
-    /** Illumos. */
+    /** Illumos (https://en.wikipedia.org/wiki/Illumos). */
     Illumos,
 
-    /** instantOS. */
+    /** instantOS (https://instantos.io/). */
     InstantOS,
 
-    /** iOS. */
+    /** iOS (https://en.wikipedia.org/wiki/iOS). */
     Ios,
 
-    /** Kali Linux. */
+    /** Kali Linux (https://en.wikipedia.org/wiki/Kali%5FLinux). */
     Kali,
 
-    /** Linux based operating system. */
+    /** Linux based operating system (https://en.wikipedia.org/wiki/Linux). */
     Linux,
 
-    /** Mabox. */
+    /** Mabox (https://maboxlinux.org/). */
     Mabox,
 
-    /** Mac OS X/OS X/macOS. */
+    /** Mac OS X/OS X/macOS (https://en.wikipedia.org/wiki/MacOS). */
     Macos,
 
-    /** Manjaro. */
+    /** Manjaro (https://en.wikipedia.org/wiki/Manjaro). */
     Manjaro,
 
-    /** Mariner. */
+    /** Mariner (https://en.wikipedia.org/wiki/CBL-Mariner). */
     Mariner,
 
-    /** MidnightBSD. */
+    /** MidnightBSD (https://en.wikipedia.org/wiki/MidnightBSD). */
     MidnightBSD,
 
-    /** Linux Mint. */
+    /** Mint (https://en.wikipedia.org/wiki/Linux%5FMint). */
     Mint,
 
-    /** NetBSD. */
+    /** NetBSD (https://en.wikipedia.org/wiki/NetBSD). */
     NetBSD,
 
-    /** NixOS. */
+    /** NixOS (https://en.wikipedia.org/wiki/NixOS). */
     NixOS,
 
-    /** Nobara. */
+    /** Nobara (https://nobaraproject.org/). */
     Nobara,
 
-    /** OpenBSD. */
+    /** OpenBSD (https://en.wikipedia.org/wiki/OpenBSD). */
     OpenBSD,
 
-    /** OpenCloudOS. */
+    /** OpenCloudOS (https://www.opencloudos.org). */
     OpenCloudOS,
 
-    /** openEuler. */
+    /** openEuler (https://en.wikipedia.org/wiki/EulerOS). */
     OpenEuler,
 
-    /** openSUSE. */
+    /** openSUSE (https://en.wikipedia.org/wiki/OpenSUSE). */
     OpenSUSE,
 
-    /** Oracle Linux. */
+    /** Oracle Linux (https://en.wikipedia.org/wiki/Oracle%5FLinux). */
     OracleLinux,
 
-    /** PikaOS. */
+    /** PikaOS (https://wiki.pika-os.com/en/home) */
     PikaOS,
 
-    /** Pop!_OS. */
+    /** Pop! OS (https://en.wikipedia.org/wiki/Pop!%5FOS) */
     Pop,
 
-    /** Raspberry Pi OS. */
+    /** Raspberry Pi OS (https://en.wikipedia.org/wiki/Raspberry%5FPi%5FOS). */
     Raspbian,
 
-    /** Red Hat Linux. */
+    /** Red Hat Linux (https://en.wikipedia.org/wiki/Red%5FHat%5FLinux). */
     Redhat,
 
-    /** Red Hat Enterprise Linux. */
+    /** Red Hat Enterprise Linux (https://en.wikipedia.org/wiki/Red%5FHat%5FEnterprise%5FLinux). */
     RedHatEnterprise,
 
-    /** Redox. */
+    /** Redox (https://en.wikipedia.org/wiki/Redox%5F(operating%5Fsystem)). */
     Redox,
 
-    /** Rocky Linux. */
+    /** Rocky Linux (https://en.wikipedia.org/wiki/Rocky%5FLinux). */
     RockyLinux,
 
-    /** Solus. */
+    /** Solus (https://en.wikipedia.org/wiki/Solus%5F(operating%5Fsystem)). */
     Solus,
 
-    /** SUSE Linux Enterprise Server. */
+    /** SUSE Linux Enterprise Server (https://en.wikipedia.org/wiki/SUSE%5FLinux%5FEnterprise). */
     SUSE,
 
-    /** Ubuntu. */
+    /** Ubuntu (https://en.wikipedia.org/wiki/Ubuntu%5F(operating%5Fsystem)). */
     Ubuntu,
 
-    /** Ultramarine. */
+    /** Ultramarine (https://ultramarine-linux.org/). */
     Ultramarine,
 
-    /** Uos. */
+    /** Uos (https://uos.uniontech.com/). */
     Uos,
 
-    /** Void Linux. */
+    /** Void Linux (https://en.wikipedia.org/wiki/Void%5FLinux). */
     Void,
 
-    /** Zorin OS. */
+    /** Zorin OS (https://en.wikipedia.org/wiki/Zorin%5FOS). */
     Zorin,
 
     /** Unknown operating system. */
     Unknown,
 
-    /** Windows. */
+    /** Windows (https://en.wikipedia.org/wiki/Microsoft%5FWindows). */
     Windows,
     ;
 
-    override fun toString(): String =
+    internal fun fmt(): String =
         when (this) {
             Alpaquita -> "Alpaquita Linux"
             Alpine -> "Alpine Linux"
@@ -226,4 +226,10 @@ enum class OsType {
             Zorin -> "Zorin OS"
             else -> name
         }
+
+    override fun toString(): String = fmt()
+
+    companion object {
+        fun default(): OsType = Unknown
+    }
 }

@@ -8,7 +8,7 @@ import kotlin.test.Test
 class AixTest {
     @Test
     fun osType() {
-        val version = currentPlatform(majorProvider = { "7" }, minorProvider = { "2" }, sysnameProvider = { "AIX" })
-        assertEq(OsType.AIX, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.AIX, version.osType())
     }
 }

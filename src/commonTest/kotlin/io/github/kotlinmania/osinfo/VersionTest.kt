@@ -25,8 +25,8 @@ class VersionTest {
             )
 
         for ((s, expected) in data) {
-            val result = parseVersionForTest(s)
-            assertEq(expected, result, "input=$s")
+            val result = parseVersion(s)
+            assertEq(expected, result)
         }
     }
 
@@ -66,9 +66,3 @@ class VersionTest {
         }
     }
 }
-
-private fun parseVersionForTest(s: String): Triple<ULong, ULong, ULong>? =
-    when (val v = Version.fromString(s)) {
-        is Version.Semantic -> Triple(v.major, v.minor, v.patch)
-        else -> null
-    }

@@ -6,24 +6,25 @@ import io.github.kotlinmania.osinfo.Version
 import io.github.kotlinmania.prettyassertions.assertEq
 import io.github.kotlinmania.prettyassertions.assertNe
 import kotlin.test.Test
+import kotlin.test.assertNotNull
 
 class MacosTest {
     @Test
     fun osType() {
-        val version = currentPlatform(commandReleaseProvider = { swVersOutput() })
-        assertEq(OsType.Macos, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.Macos, version.osType())
     }
 
     @Test
     fun osVersion() {
-        val ver = version { parse(swVersOutput()) }
-        assertNe(Version.Unknown, ver)
+        val version = version()
+        assertNe(Version.Unknown, version)
     }
 
     @Test
     fun stringProductVersion() {
-        val version = productVersion(commandReleaseProvider = { parse(swVersOutput()) })
-        assertEq("10.10.5", version)
+        val version = productVersion()
+        assertNotNull(version)
     }
 
     @Test
@@ -32,30 +33,30 @@ class MacosTest {
         assertEq("10.10.5", parseOutput)
     }
 
-    private fun swVersOutput(): String =
-        "ProductName:\tMac OS X\n" +
-            "ProductVersion:\t10.10.5\n" +
-            "BuildVersion:\t14F27"
-
     @Test
     fun parseBetaVersion() {
         val parseOutput = parse(swVersOutputBeta())
         assertEq("10.15", parseOutput)
     }
 
-    private fun swVersOutputBeta(): String =
-        "ProductName:\tMac OS X\n" +
-            "ProductVersion:\t10.15\n" +
-            "BuildVersion:\t19A546d"
-
     @Test
     fun parseDoubleDigitPatchVersion() {
         val parseOutput = parse(swVersOutputDoubleDigitPatchVersion())
         assertEq("10.15.21", parseOutput)
     }
-
-    private fun swVersOutputDoubleDigitPatchVersion(): String =
-        "ProductName:\tMac OS X\n" +
-            "ProductVersion:\t10.15.21\n" +
-            "BuildVersion:\tABCD123"
 }
+
+private fun swVersOutput(): String =
+    "ProductName:\tMac OS X\n" +
+        "ProductVersion:\t10.10.5\n" +
+        "BuildVersion:\t14F27"
+
+private fun swVersOutputBeta(): String =
+    "ProductName:\tMac OS X\n" +
+        "ProductVersion:\t10.15\n" +
+        "BuildVersion:\t19A546d"
+
+private fun swVersOutputDoubleDigitPatchVersion(): String =
+    "ProductName:\tMac OS X\n" +
+        "ProductVersion:\t10.15.21\n" +
+        "BuildVersion:\tABCD123"

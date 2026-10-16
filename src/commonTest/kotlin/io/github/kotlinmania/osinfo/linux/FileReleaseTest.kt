@@ -12,6 +12,9 @@ class FileReleaseTest {
     private fun osRelease(content: String): (String) -> String? =
         { path -> if (path.endsWith("etc/os-release")) content else null }
 
+    private fun alpineReleaseFile(content: String): (String) -> String? =
+        { path -> if (path.endsWith("etc/alpine-release")) content else null }
+
     private fun centosRelease(content: String): (String) -> String? =
         { path -> if (path.endsWith("etc/centos-release")) content else null }
 
@@ -47,16 +50,25 @@ class FileReleaseTest {
     }
 
     @Test
-    fun alpineOsRelease() {
-        val fileContent = "NAME=\"Alpine Linux\"\nID=alpine\nVERSION_ID=3.8.1\nPRETTY_NAME=\"Alpine Linux v3.8\"\n"
+    fun alpine312OsRelease() {
+        val fileContent = "NAME=\"Alpine Linux\"\nID=alpine\nVERSION_ID=3.12.0\nPRETTY_NAME=\"Alpine Linux v3.12\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
         assertEq(OsType.Alpine, info.osType)
-        assertEq(Version.Semantic(3u, 8u, 1u), info.version)
+        assertEq(Version.Semantic(3u, 12u, 0u), info.version)
     }
 
     @Test
-    fun altlinuxOsRelease() {
+    fun alpineRelease() {
+        val fileContent = "A.B.C\n"
+        val info = retrieve(DISTRIBUTIONS, "/", alpineReleaseFile(fileContent))
+        assertNotNull(info)
+        assertEq(OsType.Alpine, info.osType)
+        assertEq(Version.Custom("A.B.C"), info.version)
+    }
+
+    @Test
+    fun altP11OsRelease() {
         val fileContent = "NAME=\"ALT\"\nVERSION=\"11 (Salvia)\"\nID=altlinux\nVERSION_ID=11\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
@@ -94,6 +106,15 @@ class FileReleaseTest {
     @Test
     fun archOsRelease() {
         val fileContent = "NAME=\"Arch Linux\"\nID=arch\nPRETTY_NAME=\"Arch Linux\"\n"
+        val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
+        assertNotNull(info)
+        assertEq(OsType.Arch, info.osType)
+        assertEq(Version.Unknown, info.version)
+    }
+
+    @Test
+    fun archarmOsRelease() {
+        val fileContent = "NAME=\"Arch Linux ARM\"\nID=archarm\nPRETTY_NAME=\"Arch Linux ARM\"\n"
         val info = retrieve(DISTRIBUTIONS, "/", osRelease(fileContent))
         assertNotNull(info)
         assertEq(OsType.Arch, info.osType)

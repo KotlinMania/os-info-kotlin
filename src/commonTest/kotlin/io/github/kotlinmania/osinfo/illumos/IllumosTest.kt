@@ -8,7 +8,7 @@ import kotlin.test.Test
 class IllumosTest {
     @Test
     fun osType() {
-        val version = currentPlatform(versionProvider = { "5.11" }, osProvider = { "illumos" })
-        assertEq(OsType.Illumos, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.Illumos, version.osType())
     }
 }

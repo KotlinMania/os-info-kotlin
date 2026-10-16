@@ -8,7 +8,7 @@ import kotlin.test.Test
 class FreebsdTest {
     @Test
     fun osType() {
-        val version = currentPlatform(sysnameProvider = { "FreeBSD" }, releaseProvider = { "13.0-RELEASE" })
-        assertEq(OsType.FreeBSD, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.FreeBSD, version.osType())
     }
 }

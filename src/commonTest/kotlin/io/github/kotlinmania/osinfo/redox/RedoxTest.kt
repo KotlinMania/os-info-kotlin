@@ -8,7 +8,7 @@ import kotlin.test.Test
 class RedoxTest {
     @Test
     fun osType() {
-        val version = currentPlatform { "0.8.0" }
-        assertEq(OsType.Redox, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.Redox, version.osType())
     }
 }

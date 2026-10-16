@@ -1,29 +1,26 @@
-// port-lint: source linux/mod.rs
+// Transliterated from: linux/mod.rs
 package io.github.kotlinmania.osinfo.linux
 
+import io.github.kotlinmania.log.formatArgs
+import io.github.kotlinmania.log.trace
+import io.github.kotlinmania.osinfo.Architecture
+import io.github.kotlinmania.osinfo.Bitness
 import io.github.kotlinmania.osinfo.Info
 import io.github.kotlinmania.osinfo.OsType
-import io.github.kotlinmania.osinfo.Version
-import io.github.kotlinmania.osinfo.getArchitecture
-import io.github.kotlinmania.osinfo.getBitness
 
-fun currentPlatform(
-    lsbReleaseProvider: (() -> String?)? = null,
-    fileReleaseProvider: ((String) -> String?)? = null,
-): Info {
-    val lsbInfo = getFromLsb(lsbReleaseProvider)
-    val fileInfo = getFromFile(fileReleaseProvider)
+internal fun currentPlatform(): Info {
+    trace(formatArgs("linux::current_platform is called"))
 
-    return Info(
-        osType = lsbInfo?.osType ?: fileInfo?.osType ?: OsType.Linux,
-        version = lsbInfo?.version ?: fileInfo?.version ?: Version.Unknown,
-        edition = lsbInfo?.edition ?: fileInfo?.edition,
-        codename = lsbInfo?.codename ?: fileInfo?.codename,
-        bitness = getBitness(),
-        architecture = getArchitecture(),
-    )
+    val baseInfo =
+        LsbRelease.get()
+            ?: get()
+            ?: Info.withType(OsType.Linux)
+    val info =
+        baseInfo.copy(
+            bitness = Bitness.get(),
+            architecture = Architecture.get(),
+        )
+
+    trace(formatArgs("Returning {:?}", info))
+    return info
 }
-
-fun getFromLsb(releaseProvider: (() -> String?)? = null): Info? = get(releaseProvider)
-
-fun getFromFile(fileReleaseProvider: ((String) -> String?)? = null): Info? = get(fileReleaseProvider)

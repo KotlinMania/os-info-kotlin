@@ -13,16 +13,16 @@ package io.github.kotlinmania.osinfo
  * println("OS information: $info")
  *
  * // Print information separately:
- * println("Type: ${info.osType}")
- * println("Version: ${info.version}")
- * println("Edition: ${info.edition}")
- * println("Codename: ${info.codename}")
- * println("Bitness: ${info.bitness}")
- * println("Architecture: ${info.architecture}")
+ * println("Type: ${info.osType()}")
+ * println("Version: ${info.version()}")
+ * println("Edition: ${info.edition()}")
+ * println("Codename: ${info.codename()}")
+ * println("Bitness: ${info.bitness()}")
+ * println("Architecture: ${info.architecture()}")
  * ```
  */
 fun get(): Info = currentPlatform()
 
-fun currentPlatform(): Info =
-    io.github.kotlinmania.osinfo.unknown
+internal fun currentPlatform(): Info =
+    io.github.kotlinmania.osinfo.macos
         .currentPlatform()

@@ -20,18 +20,99 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class Info(
+    /** Operating system type. See `OsType` for details. */
     val osType: OsType = OsType.Unknown,
+    /** Operating system version. See `Version` for details. */
     val version: Version = Version.Unknown,
+    /** Operating system edition. */
     val edition: String? = null,
+    /** Operating system codename. */
     val codename: String? = null,
+    /**
+     * Operating system architecture in terms of how many bits a pointer type can represent. See
+     * `Bitness` for details.
+     */
     val bitness: Bitness = Bitness.Unknown,
+    /** Processor architecture. */
     val architecture: String? = null,
 ) : Comparable<Info> {
-    override fun toString(): String {
+    /**
+     * Returns operating system type. See `OsType` for details.
+     *
+     * # Examples
+     *
+     * ```
+     * val info = get()
+     * println("OS type: ${info.osType()}")
+     * ```
+     */
+    internal fun osType(): OsType = osType
+
+    /**
+     * Returns operating system version. See `Version` for details.
+     *
+     * # Examples
+     *
+     * ```
+     * val info = get()
+     * println("OS version: ${info.version()}")
+     * ```
+     */
+    internal fun version(): Version = version
+
+    /**
+     * Returns optional operation system edition.
+     *
+     * # Examples
+     *
+     * ```
+     * val info = get()
+     * println("OS edition: ${info.edition()}")
+     * ```
+     */
+    internal fun edition(): String? = edition
+
+    /**
+     * Returns optional operation system "codename"
+     *
+     * # Examples
+     *
+     * ```
+     * val info = get()
+     * println("OS codename: ${info.codename()}")
+     * ```
+     */
+    internal fun codename(): String? = codename
+
+    /**
+     * Returns operating system bitness. See `Bitness` for details.
+     *
+     * # Examples
+     *
+     * ```
+     * val info = get()
+     * println("OS bitness: ${info.bitness()}")
+     * ```
+     */
+    internal fun bitness(): Bitness = bitness
+
+    /**
+     * Returns operating system architecture.
+     *
+     * # Examples
+     *
+     * ```
+     * val info = get()
+     * println("OS architecture: ${info.architecture()}")
+     * ```
+     */
+    internal fun architecture(): String? = architecture
+
+    internal fun fmt(): String {
         val sb = StringBuilder()
-        sb.append(osType.toString())
+        sb.append(osType)
         if (version != Version.Unknown) {
-            sb.append(" ").append(version.toString())
+            sb.append(" ").append(version)
         }
         if (edition != null) {
             sb.append(" (").append(edition).append(")")
@@ -39,9 +120,11 @@ data class Info(
         if (codename != null) {
             sb.append(" (").append(codename).append(")")
         }
-        sb.append(" [").append(bitness.toString()).append("]")
+        sb.append(" [").append(bitness).append("]")
         return sb.toString()
     }
+
+    override fun toString(): String = fmt()
 
     override fun compareTo(other: Info): Int {
         val t = osType.compareTo(other.osType)

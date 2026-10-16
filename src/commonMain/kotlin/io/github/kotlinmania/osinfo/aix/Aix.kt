@@ -1,43 +1,42 @@
-// port-lint: source aix/mod.rs
+// Transliterated from: aix/mod.rs
 package io.github.kotlinmania.osinfo.aix
 
+import io.github.kotlinmania.log.formatArgs
+import io.github.kotlinmania.log.trace
+import io.github.kotlinmania.osinfo.Bitness
 import io.github.kotlinmania.osinfo.Info
 import io.github.kotlinmania.osinfo.OsType
 import io.github.kotlinmania.osinfo.UnameField
 import io.github.kotlinmania.osinfo.Version
-import io.github.kotlinmania.osinfo.getBitness
 import io.github.kotlinmania.osinfo.uname
 
-fun currentPlatform(
-    majorProvider: (() -> String?)? = null,
-    minorProvider: (() -> String?)? = null,
-    sysnameProvider: (() -> String?)? = null,
-): Info {
+internal fun currentPlatform(): Info {
+    trace(formatArgs("aix::current_platform is called"))
+
     val version =
-        getVersion(majorProvider, minorProvider)
-            ?.let { Version.fromString(it) }
+        getVersion()
+            ?.let(Version::fromString)
             ?: Version.Unknown
 
-    return Info(
-        osType = getOs(sysnameProvider),
-        version = version,
-        bitness = getBitness(),
-    )
+    val info =
+        Info(
+            osType = getOs(),
+            version = version,
+            bitness = Bitness.get(),
+        )
+
+    trace(formatArgs("Returning {:?}", info))
+    return info
 }
 
-fun getVersion(
-    majorProvider: (() -> String?)? = null,
-    minorProvider: (() -> String?)? = null,
-): String? {
-    val major = majorProvider?.invoke() ?: uname(UnameField.Version) ?: return null
-    val minor = minorProvider?.invoke() ?: uname(UnameField.Release) ?: "0"
+internal fun getVersion(): String? {
+    val major = uname(UnameField.Version) ?: return null
+    val minor = uname(UnameField.Release) ?: "0"
     return "$major.$minor"
 }
 
-fun getOs(sysnameProvider: (() -> String?)? = null): OsType {
-    val sysname = sysnameProvider?.invoke() ?: uname(UnameField.Sysname)
-    return when (sysname) {
+internal fun getOs(): OsType =
+    when (uname(UnameField.Sysname)) {
         "AIX" -> OsType.AIX
         else -> OsType.AIX
     }
-}

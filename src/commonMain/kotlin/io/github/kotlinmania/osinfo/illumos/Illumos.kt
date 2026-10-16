@@ -1,33 +1,36 @@
-// port-lint: source illumos/mod.rs
+// Transliterated from: illumos/mod.rs
 package io.github.kotlinmania.osinfo.illumos
 
+import io.github.kotlinmania.log.formatArgs
+import io.github.kotlinmania.log.trace
+import io.github.kotlinmania.osinfo.Bitness
 import io.github.kotlinmania.osinfo.Info
 import io.github.kotlinmania.osinfo.OsType
 import io.github.kotlinmania.osinfo.UnameField
 import io.github.kotlinmania.osinfo.Version
-import io.github.kotlinmania.osinfo.getBitness
 import io.github.kotlinmania.osinfo.uname
 
-fun currentPlatform(
-    versionProvider: (() -> String?)? = null,
-    osProvider: (() -> String?)? = null,
-): Info {
+internal fun currentPlatform(): Info {
+    trace(formatArgs("illumos::current_platform is called"))
+
     val version =
-        (versionProvider?.invoke() ?: uname(UnameField.Version))
-            ?.let { Version.fromString(it) }
+        uname(UnameField.Version)
+            ?.let(Version::fromString)
             ?: Version.Unknown
 
-    return Info(
-        osType = getOs(osProvider),
-        version = version,
-        bitness = getBitness(),
-    )
+    val info =
+        Info(
+            osType = getOs(),
+            version = version,
+            bitness = Bitness.get(),
+        )
+
+    trace(formatArgs("Returning {:?}", info))
+    return info
 }
 
-fun getOs(osProvider: (() -> String?)? = null): OsType {
-    val os = osProvider?.invoke() ?: uname(UnameField.OperatingSystem)
-    return when (os) {
+internal fun getOs(): OsType =
+    when (uname(UnameField.OperatingSystem)) {
         "illumos" -> OsType.Illumos
         else -> OsType.Illumos
     }
-}

@@ -8,7 +8,7 @@ import kotlin.test.Test
 class DragonflyTest {
     @Test
     fun osType() {
-        val version = currentPlatform { "6.0" }
-        assertEq(OsType.DragonFly, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.DragonFly, version.osType())
     }
 }

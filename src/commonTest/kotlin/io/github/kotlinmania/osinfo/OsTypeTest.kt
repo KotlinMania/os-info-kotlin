@@ -7,7 +7,7 @@ import kotlin.test.Test
 class OsTypeTest {
     @Test
     fun default() {
-        assertEq(OsType.Unknown, OsType.Unknown)
+        assertEq(OsType.Unknown, OsType.default())
     }
 
     @Test

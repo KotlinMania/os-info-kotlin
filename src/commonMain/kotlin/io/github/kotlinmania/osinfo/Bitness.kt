@@ -6,8 +6,7 @@ import kotlinx.serialization.Serializable
 // spell-checker:ignore getconf
 
 /**
- * Operating system architecture in terms of how many bits compose the basic values it can deal
- * with.
+ * Operating system architecture in terms of how many bits compose the basic values it can deal with.
  */
 @Serializable
 enum class Bitness {
@@ -21,16 +20,21 @@ enum class Bitness {
     X64,
     ;
 
-    override fun toString(): String =
+    internal fun fmt(): String =
         when (this) {
             Unknown -> "unknown bitness"
             X32 -> "32-bit"
             X64 -> "64-bit"
         }
+
+    override fun toString(): String = fmt()
+
+    companion object {
+        internal fun get(): Bitness =
+            when (uname(UnameField.Machine)) {
+                "amd64", "x86_64", "aarch64", "arm64", "sparc64" -> X64
+                "i386", "earmv7hf", "x86", "arm" -> X32
+                else -> X64
+            }
+    }
 }
-
-fun getBitness(): Bitness = platformBitness()
-
-fun bitness(): Bitness = platformBitness()
-
-internal fun platformBitness(): Bitness = Bitness.X64

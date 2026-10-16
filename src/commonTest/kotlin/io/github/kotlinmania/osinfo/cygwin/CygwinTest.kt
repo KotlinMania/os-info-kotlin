@@ -8,7 +8,7 @@ import kotlin.test.Test
 class CygwinTest {
     @Test
     fun osType() {
-        val version = currentPlatform { "3.3.4" }
-        assertEq(OsType.Cygwin, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.Cygwin, version.osType())
     }
 }

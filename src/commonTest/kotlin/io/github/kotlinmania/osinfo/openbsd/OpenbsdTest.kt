@@ -8,7 +8,7 @@ import kotlin.test.Test
 class OpenbsdTest {
     @Test
     fun osType() {
-        val version = currentPlatform { "7.0" }
-        assertEq(OsType.OpenBSD, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.OpenBSD, version.osType())
     }
 }

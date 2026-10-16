@@ -274,231 +274,231 @@ class LsbReleaseTest {
         assertEq("Pika", parseResults.distribution)
         assertEq("4", parseResults.version)
     }
-
-    private fun file(): String =
-        "\nDistributor ID:\tDebian\n" +
-            "Description:\tDebian GNU/Linux 7.8 (wheezy)\n" +
-            "Release:\t7.8\n" +
-            "Codename:\twheezy\n"
-
-    private fun alpaquitaFile(): String =
-        "\nDistributor ID: Alpaquita\n" +
-            "Description:    BellSoft Alpaquita Linux Stream 23 (musl)\n" +
-            "Release:        23\n" +
-            "Codename:       n/a"
-
-    private fun altFile(): String =
-        "\nDistributor ID: ALT\n" +
-            "Description:    ALT p11 Starterkit (Salvia)\n" +
-            "Release:        n/a\n" +
-            "Codename:       Salvia"
-
-    private fun aoscFile(): String =
-        "\nDistributor ID: AOSC OS\n" +
-            "Description:    AOSC OS\n" +
-            "Release:        12.3.1\n" +
-            "Codename:       localhost"
-
-    private fun archFile(): String =
-        "\nLSB Version:\t1.4\n" +
-            "Distributor ID:\tArch\n" +
-            "Description:\tArch Linux\n" +
-            "Release:\trolling\n" +
-            "Codename:\tn/a"
-
-    private fun artixFile(): String =
-        "\nLSB Version:\tn/a\n" +
-            "Distributor ID:\tArtix\n" +
-            "Description:\tArtix Linux\n" +
-            "Release:\trolling\n" +
-            "Codename:\tn/a"
-
-    private fun fedoraFile(): String =
-        "\nLSB Version:    :core-4.1-amd64:core-4.1-noarch:cxx-4.1-amd64:cxx-4.1-noarch\n" +
-            "Distributor ID: Fedora\n" +
-            "Description:    Fedora release 26 (Twenty Six)\n" +
-            "Release:    26\n" +
-            "Codename:   TwentySix\n"
-
-    private fun kali20232File(): String =
-        "\nDistributor ID: Kali\n" +
-            "Description:    Kali GNU/Linux Rolling\n" +
-            "Release:        2023.2\n" +
-            "Codename:       kali-rolling\n"
-
-    private fun ubuntuFile(): String =
-        "Distributor ID: Ubuntu\n" +
-            "Description:    Ubuntu 16.04.5 LTS\n" +
-            "Release:        16.04\n" +
-            "Codename:       xenial"
-
-    private fun mintFile(): String =
-        "Distributor ID:\tLinuxmint\n" +
-            "Description:\t    Linux Mint 20\n" +
-            "Release:\t        20\n" +
-            "Codename:\t        ulyana"
-
-    private fun nixosFile(): String =
-        "Distributor ID: NixOS\n" +
-            "Description:    NixOS 21.05 (Okapi)\n" +
-            "Release:        21.05pre275822.916ee862e87\n" +
-            "Codename:       okapi"
-
-    private fun nobaraFile(): String =
-        "LSB Version:\tn/a\n" +
-            "Distributor ID:\tNobaraLinux\n" +
-            "Description:\tNobara Linux 39 (KDE Plasma)\n" +
-            "Release:\t39\n" +
-            "Codename:\tn/a\n"
-
-    private fun uosFile(): String =
-        "Distributor ID: uos\n" +
-            "Description:\t UnionTech OS 20\n" +
-            "Release:\t     20\n" +
-            "Codename:\t     eagle\n"
-
-    private fun amazon1File(): String =
-        "LSB Version:\t:base-4.0-amd64:base-4.0-noarch:core-4.0-amd64:core-4.0-noarch\n" +
-            "Distributor ID:\tAmazonAMI\n" +
-            "Description:\tAmazon Linux AMI release 2018.03\n" +
-            "Release:\t2018.03\n" +
-            "Codename:\tn/a\n"
-
-    private fun amazon2File(): String =
-        "LSB Version:\t:core-4.1-amd64:core-4.1-noarch\n" +
-            "Distributor ID:\tAmazon\n" +
-            "Description:\tAmazon Linux release 2 (Karoo)\n" +
-            "Release:\t2\n" +
-            "Codename:\tKaroo\n"
-
-    private fun rhel8File(): String =
-        "LSB Version:\t:core-4.1-amd64:core-4.1-noarch\n" +
-            "Distributor ID:\tRedHatEnterprise\n" +
-            "Description:\tRed Hat Enterprise Linux release 8.1 (Ootpa)\n" +
-            "Release:\t8.1\n" +
-            "Codename:\tOotpa\n"
-
-    private fun rhel7File(): String =
-        "LSB Version:\t:core-4.1-amd64:core-4.1-noarch\n" +
-            "Distributor ID:\tRedHatEnterpriseServer\n" +
-            "Description:\tRed Hat Enterprise Linux Server release 7.7 (Maipo)\n" +
-            "Release:\t7.7\n" +
-            "Codename:\tMaipo\n"
-
-    private fun rhel6File(): String =
-        "LSB Version:\t:base-4.0-amd64:base-4.0-noarch:core-4.0-amd64:core-4.0-noarch:graphics-4.0-amd64:graphics-4.0-noarch:printing-4.0-amd64:printing-4.0-noarch\n" +
-            "Distributor ID:\tRedHatEnterpriseServer\n" +
-            "Description:\tRed Hat Enterprise Linux Server release 6.10 (Santiago)\n" +
-            "Release:\t6.10\n" +
-            "Codename:\tSantiago\n"
-
-    private fun suseEnterprise151File(): String =
-        "LSB Version:\tn/a\n" +
-            "Distributor ID:\tSUSE\n" +
-            "Description:\tSUSE Linux Enterprise Server 15 SP1\n" +
-            "Release:\t15.1\n" +
-            "Codename:\tn/a\n"
-
-    private fun suseEnterprise125File(): String =
-        "LSB Version:\tn/a\n" +
-            "Distributor ID:\tSUSE\n" +
-            "Description:\tSUSE Linux Enterprise Server 12 SP5\n" +
-            "Release:\t12.5\n" +
-            "Codename:\tn/a\n"
-
-    private fun raspberryOsFile(): String =
-        "LSB Version:   n/a\n" +
-            "Distributor ID: Raspbian\n" +
-            "Description:    Raspbian GNU/Linux 10 (buster)\n" +
-            "Release:        10\n" +
-            "Codename:       n/a\n"
-
-    private fun openSuse151File(): String =
-        "LSB Version:\tn/a\n" +
-            "Distributor ID:\topenSUSE\n" +
-            "Description:\topenSUSE Leap 15.1\n" +
-            "Release:\t15.1\n" +
-            "Codename:\tn/a\n"
-
-    private fun oracleServerLinux75File(): String =
-        "LSB Version:\t:core-4.1-amd64:core-4.1-noarch\n" +
-            "Distributor ID:\tOracleServer\n" +
-            "Description:\tOracle Linux Server release 7.5\n" +
-            "Release:\t7.5\n" +
-            "Codename:\tn/a\n"
-
-    private fun oracleServerLinux81File(): String =
-        "LSB Version:\t:core-4.1-amd64:core-4.1-noarch\n" +
-            "Distributor ID:\tOracleServer\n" +
-            "Description:\tOracle Linux Server release 8.1\n" +
-            "Release:\t8.1\n" +
-            "Codename:\tn/a\n"
-
-    private fun popOs2004LtsFile(): String =
-        "No LSB modules are available.\n" +
-            "Distributor ID: Pop\n" +
-            "Description: Pop!_OS 20.04 LTS\n" +
-            "Release: 20.04\n" +
-            "Codename: focal\n"
-
-    private fun solus41File(): String =
-        "LSB Version:\t1.4\n" +
-            "Distributor ID:\tSolus\n" +
-            "Description:\tSolus\n" +
-            "Release:\t4.1\n" +
-            "Codename:\tfortitude\n"
-
-    private fun manjaro1902File(): String =
-        "LSB Version:    n/a\n" +
-            "Distributor ID: ManjaroLinux\n" +
-            "Description:    Manjaro Linux\n" +
-            "Release:        19.0.2\n" +
-            "Codename:       n/a\n"
-
-    private fun manjaroArm2404(): String =
-        "LSB Version:    n/a\n" +
-            "Distributor ID: Manjaro-ARM\n" +
-            "Description:    Manjaro ARM Linux\n" +
-            "Release:        24.04\n" +
-            "Codename:       n/a\n"
-
-    private fun marinerFile(): String =
-        "LSB Version:    n/a\n" +
-            "Distributor ID: Mariner\n" +
-            "Description:    CBL-Mariner 2.0.20220210\n" +
-            "Release:        2.0.20220210\n" +
-            "Codename:       Mariner\n"
-
-    private fun endeavourosFile(): String =
-        "LSB Version:\t1.4\n" +
-            "Distributor ID:\tEndeavourOS\n" +
-            "Description:\tEndeavourOS Linux\n" +
-            "Release:\trolling\n" +
-            "Codename:\tn/a\n"
-
-    private fun ultramarineFile(): String =
-        "LSB Version:    n/a\n" +
-            "Distributor ID: UltramarineLinux\n" +
-            "Description:    Ultramarine Linux 39 (Kuma)\n" +
-            "Release:        39\n" +
-            "Codename:       kuma\n"
-
-    private fun voidFile(): String =
-        "LSB Version:        n/a\n" +
-            "  Distributor ID:        Void\n" +
-            "  Description:        Void Linux\n" +
-            "  Release:        rolling\n" +
-            "  Codename:        n/a\n"
-
-    private fun cachyosFile(): String =
-        "Distributor ID: cachyos\n" +
-            "Description:\t CachyOS\n" +
-            "Release:\t     rolling\n" +
-            "Codename:\t     n/a\n"
-
-    private fun pikaosFile(): String =
-        "Distributor ID: Pika\n" +
-            "Description:    PikaOS 4\n" +
-            "Release:        4\n" +
-            "Codename:       nest\n"
 }
+
+private fun file(): String =
+    "\nDistributor ID:\tDebian\n" +
+        "Description:\tDebian GNU/Linux 7.8 (wheezy)\n" +
+        "Release:\t7.8\n" +
+        "Codename:\twheezy\n"
+
+private fun alpaquitaFile(): String =
+    "\nDistributor ID: Alpaquita\n" +
+        "Description:    BellSoft Alpaquita Linux Stream 23 (musl)\n" +
+        "Release:        23\n" +
+        "Codename:       n/a"
+
+private fun altFile(): String =
+    "\nDistributor ID: ALT\n" +
+        "Description:    ALT p11 Starterkit (Salvia)\n" +
+        "Release:        n/a\n" +
+        "Codename:       Salvia"
+
+private fun aoscFile(): String =
+    "\nDistributor ID: AOSC OS\n" +
+        "Description:    AOSC OS\n" +
+        "Release:        12.3.1\n" +
+        "Codename:       localhost"
+
+private fun archFile(): String =
+    "\nLSB Version:\t1.4\n" +
+        "Distributor ID:\tArch\n" +
+        "Description:\tArch Linux\n" +
+        "Release:\trolling\n" +
+        "Codename:\tn/a"
+
+private fun artixFile(): String =
+    "\nLSB Version:\tn/a\n" +
+        "Distributor ID:\tArtix\n" +
+        "Description:\tArtix Linux\n" +
+        "Release:\trolling\n" +
+        "Codename:\tn/a"
+
+private fun fedoraFile(): String =
+    "\nLSB Version:    :core-4.1-amd64:core-4.1-noarch:cxx-4.1-amd64:cxx-4.1-noarch\n" +
+        "Distributor ID: Fedora\n" +
+        "Description:    Fedora release 26 (Twenty Six)\n" +
+        "Release:    26\n" +
+        "Codename:   TwentySix\n"
+
+private fun kali20232File(): String =
+    "\nDistributor ID: Kali\n" +
+        "Description:    Kali GNU/Linux Rolling\n" +
+        "Release:        2023.2\n" +
+        "Codename:       kali-rolling\n"
+
+private fun ubuntuFile(): String =
+    "Distributor ID: Ubuntu\n" +
+        "Description:    Ubuntu 16.04.5 LTS\n" +
+        "Release:        16.04\n" +
+        "Codename:       xenial"
+
+private fun mintFile(): String =
+    "Distributor ID:\tLinuxmint\n" +
+        "Description:\t    Linux Mint 20\n" +
+        "Release:\t        20\n" +
+        "Codename:\t        ulyana"
+
+private fun nixosFile(): String =
+    "Distributor ID: NixOS\n" +
+        "Description:    NixOS 21.05 (Okapi)\n" +
+        "Release:        21.05pre275822.916ee862e87\n" +
+        "Codename:       okapi"
+
+private fun nobaraFile(): String =
+    "LSB Version:\tn/a\n" +
+        "Distributor ID:\tNobaraLinux\n" +
+        "Description:\tNobara Linux 39 (KDE Plasma)\n" +
+        "Release:\t39\n" +
+        "Codename:\tn/a\n"
+
+private fun uosFile(): String =
+    "Distributor ID: uos\n" +
+        "Description:\t UnionTech OS 20\n" +
+        "Release:\t     20\n" +
+        "Codename:\t     eagle\n"
+
+private fun amazon1File(): String =
+    "LSB Version:\t:base-4.0-amd64:base-4.0-noarch:core-4.0-amd64:core-4.0-noarch\n" +
+        "Distributor ID:\tAmazonAMI\n" +
+        "Description:\tAmazon Linux AMI release 2018.03\n" +
+        "Release:\t2018.03\n" +
+        "Codename:\tn/a\n"
+
+private fun amazon2File(): String =
+    "LSB Version:\t:core-4.1-amd64:core-4.1-noarch\n" +
+        "Distributor ID:\tAmazon\n" +
+        "Description:\tAmazon Linux release 2 (Karoo)\n" +
+        "Release:\t2\n" +
+        "Codename:\tKaroo\n"
+
+private fun rhel8File(): String =
+    "LSB Version:\t:core-4.1-amd64:core-4.1-noarch\n" +
+        "Distributor ID:\tRedHatEnterprise\n" +
+        "Description:\tRed Hat Enterprise Linux release 8.1 (Ootpa)\n" +
+        "Release:\t8.1\n" +
+        "Codename:\tOotpa\n"
+
+private fun rhel7File(): String =
+    "LSB Version:\t:core-4.1-amd64:core-4.1-noarch\n" +
+        "Distributor ID:\tRedHatEnterpriseServer\n" +
+        "Description:\tRed Hat Enterprise Linux Server release 7.7 (Maipo)\n" +
+        "Release:\t7.7\n" +
+        "Codename:\tMaipo\n"
+
+private fun rhel6File(): String =
+    "LSB Version:\t:base-4.0-amd64:base-4.0-noarch:core-4.0-amd64:core-4.0-noarch:graphics-4.0-amd64:graphics-4.0-noarch:printing-4.0-amd64:printing-4.0-noarch\n" +
+        "Distributor ID:\tRedHatEnterpriseServer\n" +
+        "Description:\tRed Hat Enterprise Linux Server release 6.10 (Santiago)\n" +
+        "Release:\t6.10\n" +
+        "Codename:\tSantiago\n"
+
+private fun suseEnterprise151File(): String =
+    "LSB Version:\tn/a\n" +
+        "Distributor ID:\tSUSE\n" +
+        "Description:\tSUSE Linux Enterprise Server 15 SP1\n" +
+        "Release:\t15.1\n" +
+        "Codename:\tn/a\n"
+
+private fun suseEnterprise125File(): String =
+    "LSB Version:\tn/a\n" +
+        "Distributor ID:\tSUSE\n" +
+        "Description:\tSUSE Linux Enterprise Server 12 SP5\n" +
+        "Release:\t12.5\n" +
+        "Codename:\tn/a\n"
+
+private fun raspberryOsFile(): String =
+    "LSB Version:   n/a\n" +
+        "Distributor ID: Raspbian\n" +
+        "Description:    Raspbian GNU/Linux 10 (buster)\n" +
+        "Release:        10\n" +
+        "Codename:       n/a\n"
+
+private fun openSuse151File(): String =
+    "LSB Version:\tn/a\n" +
+        "Distributor ID:\topenSUSE\n" +
+        "Description:\topenSUSE Leap 15.1\n" +
+        "Release:\t15.1\n" +
+        "Codename:\tn/a\n"
+
+private fun oracleServerLinux75File(): String =
+    "LSB Version:\t:core-4.1-amd64:core-4.1-noarch\n" +
+        "Distributor ID:\tOracleServer\n" +
+        "Description:\tOracle Linux Server release 7.5\n" +
+        "Release:\t7.5\n" +
+        "Codename:\tn/a\n"
+
+private fun oracleServerLinux81File(): String =
+    "LSB Version:\t:core-4.1-amd64:core-4.1-noarch\n" +
+        "Distributor ID:\tOracleServer\n" +
+        "Description:\tOracle Linux Server release 8.1\n" +
+        "Release:\t8.1\n" +
+        "Codename:\tn/a\n"
+
+private fun popOs2004LtsFile(): String =
+    "No LSB modules are available.\n" +
+        "Distributor ID: Pop\n" +
+        "Description: Pop!_OS 20.04 LTS\n" +
+        "Release: 20.04\n" +
+        "Codename: focal\n"
+
+private fun solus41File(): String =
+    "LSB Version:\t1.4\n" +
+        "Distributor ID:\tSolus\n" +
+        "Description:\tSolus\n" +
+        "Release:\t4.1\n" +
+        "Codename:\tfortitude\n"
+
+private fun manjaro1902File(): String =
+    "LSB Version:    n/a\n" +
+        "Distributor ID: ManjaroLinux\n" +
+        "Description:    Manjaro Linux\n" +
+        "Release:        19.0.2\n" +
+        "Codename:       n/a\n"
+
+private fun manjaroArm2404(): String =
+    "LSB Version:    n/a\n" +
+        "Distributor ID: Manjaro-ARM\n" +
+        "Description:    Manjaro ARM Linux\n" +
+        "Release:        24.04\n" +
+        "Codename:       n/a\n"
+
+private fun marinerFile(): String =
+    "LSB Version:    n/a\n" +
+        "Distributor ID: Mariner\n" +
+        "Description:    CBL-Mariner 2.0.20220210\n" +
+        "Release:        2.0.20220210\n" +
+        "Codename:       Mariner\n"
+
+private fun endeavourosFile(): String =
+    "LSB Version:\t1.4\n" +
+        "Distributor ID:\tEndeavourOS\n" +
+        "Description:\tEndeavourOS Linux\n" +
+        "Release:\trolling\n" +
+        "Codename:\tn/a\n"
+
+private fun ultramarineFile(): String =
+    "LSB Version:    n/a\n" +
+        "Distributor ID: UltramarineLinux\n" +
+        "Description:    Ultramarine Linux 39 (Kuma)\n" +
+        "Release:        39\n" +
+        "Codename:       kuma\n"
+
+private fun voidFile(): String =
+    "LSB Version:        n/a\n" +
+        "  Distributor ID:        Void\n" +
+        "  Description:        Void Linux\n" +
+        "  Release:        rolling\n" +
+        "  Codename:        n/a\n"
+
+private fun cachyosFile(): String =
+    "Distributor ID: cachyos\n" +
+        "Description:\t CachyOS\n" +
+        "Release:\t     rolling\n" +
+        "Codename:\t     n/a\n"
+
+private fun pikaosFile(): String =
+    "Distributor ID: Pika\n" +
+        "Description:    PikaOS 4\n" +
+        "Release:        4\n" +
+        "Codename:       nest\n"

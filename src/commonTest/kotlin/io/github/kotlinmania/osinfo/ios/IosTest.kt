@@ -8,7 +8,7 @@ import kotlin.test.Test
 class IosTest {
     @Test
     fun osType() {
-        val version = currentPlatform { "17.0" }
-        assertEq(OsType.Ios, version.osType)
+        val version = currentPlatform()
+        assertEq(OsType.Ios, version.osType())
     }
 }

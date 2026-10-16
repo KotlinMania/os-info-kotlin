@@ -9,6 +9,6 @@ class UnknownTest {
     @Test
     fun osType() {
         val version = currentPlatform()
-        assertEq(OsType.Unknown, version.osType)
+        assertEq(OsType.Unknown, version.osType())
     }
 }

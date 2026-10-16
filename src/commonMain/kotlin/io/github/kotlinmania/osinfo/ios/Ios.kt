@@ -1,25 +1,39 @@
-// port-lint: source ios/mod.rs
+// Transliterated from: ios/mod.rs
 package io.github.kotlinmania.osinfo.ios
 
+import io.github.kotlinmania.log.formatArgs
+import io.github.kotlinmania.log.trace
 import io.github.kotlinmania.osinfo.Bitness
 import io.github.kotlinmania.osinfo.Info
 import io.github.kotlinmania.osinfo.OsType
+import io.github.kotlinmania.osinfo.UnameField
 import io.github.kotlinmania.osinfo.Version
+import io.github.kotlinmania.osinfo.uname
 
-fun currentPlatform(systemVersionProvider: (() -> String?)? = null): Info {
-    val bitness = Bitness.X64
+internal fun currentPlatform(): Info {
+    trace(formatArgs("ios::current_platform is called"))
 
-    return Info(
-        osType = OsType.Ios,
-        version = version(systemVersionProvider),
-        bitness = bitness,
-    )
+    val bitness =
+        when (uname(UnameField.Machine)) {
+            "x86", "arm" -> Bitness.X32
+            "x86_64", "aarch64", "arm64" -> Bitness.X64
+            else -> Bitness.Unknown
+        }
+
+    val info =
+        Info(
+            osType = OsType.Ios,
+            version = version(),
+            bitness = bitness,
+        )
+    trace(formatArgs("Returning {:?}", info))
+    return info
 }
 
-fun version(systemVersionProvider: (() -> String?)? = null): Version {
-    val ver = systemVersion(systemVersionProvider)
-    return if (ver != null) Version.fromString(ver) else Version.Unknown
-}
+internal fun version(): Version =
+    when (val v = systemVersion()) {
+        null -> Version.Unknown
+        else -> Version.fromString(v)
+    }
 
-fun systemVersion(systemVersionProvider: (() -> String?)? = null): String? =
-    systemVersionProvider?.invoke()
+internal fun systemVersion(): String? = uname(UnameField.Release)

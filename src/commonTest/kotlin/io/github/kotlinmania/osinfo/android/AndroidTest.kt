@@ -9,6 +9,6 @@ class AndroidTest {
     @Test
     fun osType() {
         val version = currentPlatform()
-        assertEq(OsType.Android, version.osType)
+        assertEq(OsType.Android, version.osType())
     }
 }

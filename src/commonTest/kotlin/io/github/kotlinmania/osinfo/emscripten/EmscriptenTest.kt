@@ -9,6 +9,6 @@ class EmscriptenTest {
     @Test
     fun osType() {
         val version = currentPlatform()
-        assertEq(OsType.Emscripten, version.osType)
+        assertEq(OsType.Emscripten, version.osType())
     }
 }

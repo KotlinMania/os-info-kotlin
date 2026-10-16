@@ -32,7 +32,7 @@ sealed class Version : Comparable<Version> {
         val value: String,
     ) : Version()
 
-    final override fun toString(): String =
+    internal fun fmt(): String =
         when (this) {
             is Unknown -> "Unknown"
             is Semantic -> "$major.$minor.$patch"
@@ -42,6 +42,8 @@ sealed class Version : Comparable<Version> {
             }
             is Custom -> value
         }
+
+    final override fun toString(): String = fmt()
 
     override fun compareTo(other: Version): Int {
         val a = ordinalOf(this)
@@ -91,7 +93,6 @@ sealed class Version : Comparable<Version> {
             }
         }
 
-        /** Default value, equivalent to upstream `Default::default()`: returns [Unknown]. */
         fun default(): Version = Unknown
 
         private fun ordinalOf(v: Version): Int =
@@ -112,7 +113,7 @@ sealed class Version : Comparable<Version> {
     }
 }
 
-private fun parseVersion(s: String): Triple<ULong, ULong, ULong>? {
+internal fun parseVersion(s: String): Triple<ULong, ULong, ULong>? {
     val parts =
         s.trim().split('.').let {
             if (it.isNotEmpty() && it.last().isEmpty()) it.dropLast(1) else it

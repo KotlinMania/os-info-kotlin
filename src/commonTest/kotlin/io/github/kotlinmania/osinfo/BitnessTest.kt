@@ -8,17 +8,21 @@ import kotlin.test.Test
 class BitnessTest {
     @Test
     fun getBitness() {
-        assertNe(
-            Bitness.Unknown,
-            io.github.kotlinmania.osinfo
-                .getBitness(),
-        )
+        val b = Bitness.get()
+        assertNe(b, Bitness.Unknown)
     }
 
     @Test
     fun display() {
-        assertEq("unknown bitness", Bitness.Unknown.toString())
-        assertEq("32-bit", Bitness.X32.toString())
-        assertEq("64-bit", Bitness.X64.toString())
+        val data =
+            listOf(
+                Bitness.Unknown to "unknown bitness",
+                Bitness.X32 to "32-bit",
+                Bitness.X64 to "64-bit",
+            )
+
+        for ((bitness, expected) in data) {
+            assertEq(bitness.toString(), expected)
+        }
     }
 }
