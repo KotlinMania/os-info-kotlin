@@ -12,7 +12,7 @@ androidSystemProperties = "0.1.0"
 log = "0.1.4"
 prettyAssertions = "0.1.0"
 serde = "0.1.10"
-windowsSys = "0.1.2"
+windowsSys = "0.1.0"
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
@@ -46,4 +46,5 @@ osinfo-commonMain = [
   "android-system-properties",
   "log",
   "serde",
+  "windows-sys",
 ]
