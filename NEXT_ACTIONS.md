@@ -5,13 +5,15 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 26/26 (100.0%)
-- **Function parity:** 184/237 matched (target 253) — 77.6%
+- **Function parity:** 190/249 matched (target 253) — 76.3%
 - **Class/type parity:** 11/12 matched (target 46) — 91.7%
-- **Combined symbol parity:** 195/249 matched (target 299) — 78.3%
-- **Average inline-code cosine:** 0.47 (function body across 11 matched files)
+- **Combined symbol parity:** 201/261 matched (target 299) — 77.0%
+- **Average inline-code cosine:** 0.15 (function body across 11 matched files)
 - **Average documentation cosine:** 0.53 (doc text across 11 matched files)
 - **Cheat-zeroed Files:** 15
-- **Critical Issues:** 22 files with <0.60 function similarity
+- **Critical Issues:** 26 files with <0.60 function similarity
+- **Needs Review:** 0 files with 0.60-0.84 function similarity
+- **Excellent:** 0 files with >=0.85 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
 
@@ -30,40 +32,52 @@ Every matched file is listed below with function and type symbol parity.
 ### 1. info
 
 - **Target:** `osinfo.Info`
-- **Similarity:** 0.32
+- **Similarity:** 0.13
 - **Dependents:** 1
-- **Priority Score:** 1071206.8
-- **Functions:** 4/11 matched (target 10)
+- **Priority Score:** 1071508.8
+- **Functions:** 7/14 matched (target 10)
 - **Missing functions:** `os_type`, `version`, `edition`, `codename`, `bitness`, `architecture`, `fmt`
 - **Types:** 1/1 matched (target 2)
 - **Missing types:** _none_
-- **Tests:** 1/1 matched
+- **Tests:** 4/4 matched
 
 ### 2. linux.lsb_release
 
 - **Target:** `linux.LsbRelease`
-- **Similarity:** 0.64
+- **Similarity:** 0.17
 - **Dependents:** 0
-- **Priority Score:** 347203.6
+- **Priority Score:** 347208.3
 - **Functions:** 37/71 matched
 - **Missing functions:** `file`, `alpaquita_file`, `alt_file`, `aosc_file`, `arch_file`, `artix_file`, `fedora_file`, `kali_2023_2_file`, `ubuntu_file`, `mint_file`, `nixos_file`, `nobara_file`, `uos_file`, `amazon1_file`, `amazon2_file`, `rhel8_file`, `rhel7_file`, `rhel6_file`, `suse_enterprise15_1_file`, `suse_enterprise12_5_file`, `raspberry_os_file`, `open_suse_15_1_file`, `oracle_server_linux_7_5_file`, `oracle_server_linux_8_1_file`, `pop_os_20_04_lts_file`, `solus_4_1_file`, `manjaro_19_0_2_file`, `manjaro_arm_24_04`, `mariner_file`, `endeavouros_file`, `ultramarine_file`, `void_file`, `cachyos_file`, `pikaos_file`
 - **Types:** 1/1 matched (target 2)
 - **Missing types:** _none_
 - **Tests:** 34/68 matched
 
-### 3. linux.file_release
+### 3. bitness
+
+- **Target:** `osinfo.Bitness`
+- **Similarity:** 0.01
+- **Dependents:** 0
+- **Priority Score:** 60909.9
+- **Functions:** 2/8 matched (target 6)
+- **Missing functions:** `fmt`, `get`, `get`, `get`, `get`, `get`
+- **Types:** 1/1 matched (target 2)
+- **Missing types:** _none_
+- **Tests:** 2/2 matched
+
+### 4. linux.file_release
 
 - **Target:** `linux.FileRelease`
-- **Similarity:** 0.62
+- **Similarity:** 0.14
 - **Dependents:** 0
-- **Priority Score:** 45403.8
+- **Priority Score:** 45408.6
 - **Functions:** 49/53 matched (target 55)
 - **Missing functions:** `alpine_3_12_os_release`, `alpine_release`, `alt_p11_os_release`, `archarm_os_release`
 - **Types:** 1/1 matched (target 2)
 - **Missing types:** _none_
 - **Tests:** 46/50 matched
 
-### 4. macos.mod
+### 5. macos.mod
 
 - **Target:** `macos.Mod [STUB]`
 - **Similarity:** 0.00
@@ -75,72 +89,60 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 6/9 matched
 
-### 5. bitness
-
-- **Target:** `osinfo.Bitness`
-- **Similarity:** 0.15
-- **Dependents:** 0
-- **Priority Score:** 20508.5
-- **Functions:** 2/4 matched (target 6)
-- **Missing functions:** `fmt`, `get`
-- **Types:** 1/1 matched (target 2)
-- **Missing types:** _none_
-- **Tests:** 2/2 matched
-
 ### 6. os_type
 
 - **Target:** `osinfo.OsType`
-- **Similarity:** 0.21
+- **Similarity:** 0.06
 - **Dependents:** 0
-- **Priority Score:** 20407.9
-- **Functions:** 2/3 matched
-- **Missing functions:** `fmt`
+- **Priority Score:** 30509.4
+- **Functions:** 2/4 matched (target 3)
+- **Missing functions:** `fmt`, `default`
 - **Types:** 0/1 matched (target 2)
 - **Missing types:** `Type`
-- **Tests:** 1/1 matched
+- **Tests:** 1/2 matched
 
-### 7. version
+### 7. windows.winapi
+
+- **Target:** `windows.Winapi`
+- **Similarity:** 0.18
+- **Dependents:** 0
+- **Priority Score:** 12808.2
+- **Functions:** 23/24 matched
+- **Missing functions:** `bitness`
+- **Types:** 4/4 matched (target 6)
+- **Missing types:** _none_
+- **Tests:** 12/12 matched
+
+### 8. version
 
 - **Target:** `osinfo.Version`
-- **Similarity:** 0.59
+- **Similarity:** 0.26
 - **Dependents:** 0
-- **Priority Score:** 10704.1
-- **Functions:** 5/6 matched (target 12)
+- **Priority Score:** 10907.4
+- **Functions:** 7/8 matched (target 12)
 - **Missing functions:** `fmt`
 - **Types:** 1/1 matched (target 6)
 - **Missing types:** _none_
-- **Tests:** 2/2 matched
+- **Tests:** 4/4 matched
 
-### 8. architecture
+### 9. architecture
 
 - **Target:** `osinfo.Architecture`
-- **Similarity:** 0.12
+- **Similarity:** 0.03
 - **Dependents:** 0
-- **Priority Score:** 10208.8
+- **Priority Score:** 10209.7
 - **Functions:** 1/2 matched (target 3)
 - **Missing functions:** `get`
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
 
-### 9. windows.winapi
-
-- **Target:** `windows.Winapi`
-- **Similarity:** 0.57
-- **Dependents:** 0
-- **Priority Score:** 2604.3
-- **Functions:** 22/22 matched (target 24)
-- **Missing functions:** _none_
-- **Types:** 4/4 matched (target 6)
-- **Missing types:** _none_
-- **Tests:** 11/11 matched
-
 ### 10. matcher
 
 - **Target:** `osinfo.Matcher`
-- **Similarity:** 0.67
+- **Similarity:** 0.32
 - **Dependents:** 0
-- **Priority Score:** 903.3
+- **Priority Score:** 906.8
 - **Functions:** 8/8 matched
 - **Missing functions:** _none_
 - **Types:** 1/1 matched (target 6)
@@ -150,9 +152,9 @@ Every matched file is listed below with function and type symbol parity.
 ### 11. uname
 
 - **Target:** `osinfo.Uname`
-- **Similarity:** 0.55
+- **Similarity:** 0.20
 - **Dependents:** 0
-- **Priority Score:** 704.5
+- **Priority Score:** 708.0
 - **Functions:** 6/6 matched (target 7)
 - **Missing functions:** _none_
 - **Types:** 1/1 matched (target 2)
@@ -183,9 +185,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
 
-### 14. illumos.mod
+### 14. freebsd.mod
 
-- **Target:** `illumos.Mod [STUB]`
+- **Target:** `freebsd.Mod [STUB]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 310.0
@@ -219,9 +221,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
 
-### 17. freebsd.mod
+### 17. illumos.mod
 
-- **Target:** `freebsd.Mod [STUB]`
+- **Target:** `illumos.Mod [STUB]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 310.0
@@ -243,9 +245,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
 
-### 19. windows.mod
+### 19. unknown.mod
 
-- **Target:** `windows.Mod [STUB]`
+- **Target:** `unknown.Mod [STUB]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 210.0
@@ -267,9 +269,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
 
-### 21. unknown.mod
+### 21. windows.mod
 
-- **Target:** `unknown.Mod [STUB]`
+- **Target:** `windows.Mod [STUB]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 210.0
@@ -291,9 +293,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
 
-### 23. netbsd.mod
+### 23. emscripten.mod
 
-- **Target:** `netbsd.Mod [STUB]`
+- **Target:** `emscripten.Mod [STUB]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 210.0
@@ -303,9 +305,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
 
-### 24. emscripten.mod
+### 24. netbsd.mod
 
-- **Target:** `emscripten.Mod [STUB]`
+- **Target:** `netbsd.Mod [STUB]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 210.0
@@ -330,9 +332,9 @@ Every matched file is listed below with function and type symbol parity.
 ### 26. lib
 
 - **Target:** `osinfo.Lib`
-- **Similarity:** 0.78
+- **Similarity:** 0.20
 - **Dependents:** 0
-- **Priority Score:** 102.2
+- **Priority Score:** 108.0
 - **Functions:** 1/1 matched (target 2)
 - **Missing functions:** _none_
 - **Types:** 0/0 matched
