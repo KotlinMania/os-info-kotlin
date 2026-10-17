@@ -108,4 +108,21 @@ class InfoTest {
             assertEq(expected, info.toString())
         }
     }
+
+    @Test
+    fun jsonSchema() {
+        val generator =
+            io.github.kotlinmania.schemars.generate.SchemaGenerator
+                .default()
+        val rootSchema = generator.rootSchemaFor(Info.jsonSchemaDescriptor)
+        assertEq(
+            io.github.kotlinmania.schemars.Value
+                .Str("object"),
+            rootSchema.get("type"),
+        )
+        val defs = rootSchema.get("\$defs") as io.github.kotlinmania.schemars.Value.Object
+        assertEq(true, defs.entries.containsKey("Type"))
+        assertEq(true, defs.entries.containsKey("Version"))
+        assertEq(true, defs.entries.containsKey("Bitness"))
+    }
 }

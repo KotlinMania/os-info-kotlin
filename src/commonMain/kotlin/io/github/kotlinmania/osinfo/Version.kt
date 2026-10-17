@@ -116,6 +116,14 @@ sealed class Version : Comparable<Version> {
 
         fun default(): Version = Unknown
 
+        @OptIn(kotlin.experimental.ExperimentalObjCRefinement::class)
+        @kotlin.native.HiddenFromObjC
+        fun jsonSchema(
+            generator: io.github.kotlinmania.schemars.generate.SchemaGenerator =
+                io.github.kotlinmania.schemars.generate.SchemaGenerator
+                    .default(),
+        ): io.github.kotlinmania.schemars.Schema = jsonSchemaDescriptor.jsonSchema(generator)
+
         private fun ordinalOf(v: Version): Int =
             when (v) {
                 is Unknown -> 0
@@ -133,6 +141,125 @@ sealed class Version : Comparable<Version> {
             }
     }
 }
+
+@OptIn(kotlin.experimental.ExperimentalObjCRefinement::class)
+@kotlin.native.HiddenFromObjC
+val Version.Companion.jsonSchemaDescriptor: io.github.kotlinmania.schemars.JsonSchema
+    get() =
+        object : io.github.kotlinmania.schemars.JsonSchema {
+            override fun schemaName(): String = "Version"
+
+            override fun schemaId(): String = "os_info::version::Version"
+
+            override fun jsonSchema(
+                generator: io.github.kotlinmania.schemars.generate.SchemaGenerator,
+            ): io.github.kotlinmania.schemars.Schema =
+                io.github.kotlinmania.schemars.jsonSchema {
+                    this["description"] = "Operating system version."
+                    this["oneOf"] =
+                        io.github.kotlinmania.schemars.Value.Array(
+                            mutableListOf(
+                                io.github.kotlinmania.schemars
+                                    .jsonSchema {
+                                        this["description"] = "Unknown version."
+                                        this["type"] = "string"
+                                        this["const"] = "Unknown"
+                                    }.toValue(),
+                                io.github.kotlinmania.schemars
+                                    .jsonSchema {
+                                        this["description"] = "Semantic version (major.minor.patch)."
+                                        this["type"] = "object"
+                                        this["properties"] =
+                                            io.github.kotlinmania.schemars.Value.Object(
+                                                mutableMapOf(
+                                                    "Semantic" to
+                                                        io.github.kotlinmania.schemars
+                                                            .jsonSchema {
+                                                                this["type"] = "array"
+                                                                this["prefixItems"] =
+                                                                    io.github.kotlinmania.schemars.Value.Array(
+                                                                        mutableListOf(
+                                                                            generator
+                                                                                .subschemaFor(
+                                                                                    io.github.kotlinmania.schemars.jsonschemaimpls.U64Schema,
+                                                                                ).toValue(),
+                                                                            generator
+                                                                                .subschemaFor(
+                                                                                    io.github.kotlinmania.schemars.jsonschemaimpls.U64Schema,
+                                                                                ).toValue(),
+                                                                            generator
+                                                                                .subschemaFor(
+                                                                                    io.github.kotlinmania.schemars.jsonschemaimpls.U64Schema,
+                                                                                ).toValue(),
+                                                                        ),
+                                                                    )
+                                                                this["minItems"] = 3
+                                                                this["maxItems"] = 3
+                                                            }.toValue(),
+                                                ),
+                                            )
+                                        this["required"] =
+                                            io.github.kotlinmania.schemars.Value.Array(
+                                                mutableListOf(
+                                                    io.github.kotlinmania.schemars.Value
+                                                        .Str("Semantic"),
+                                                ),
+                                            )
+                                        this["additionalProperties"] = false
+                                    }.toValue(),
+                                io.github.kotlinmania.schemars
+                                    .jsonSchema {
+                                        this["description"] =
+                                            "Rolling version. Optionally contains the release date in the string format."
+                                        this["type"] = "object"
+                                        this["properties"] =
+                                            io.github.kotlinmania.schemars.Value.Object(
+                                                mutableMapOf(
+                                                    "Rolling" to
+                                                        generator
+                                                            .subschemaFor(
+                                                                io.github.kotlinmania.schemars.jsonschemaimpls.OptionSchema(
+                                                                    io.github.kotlinmania.schemars.jsonschemaimpls.StringSchema,
+                                                                ),
+                                                            ).toValue(),
+                                                ),
+                                            )
+                                        this["required"] =
+                                            io.github.kotlinmania.schemars.Value.Array(
+                                                mutableListOf(
+                                                    io.github.kotlinmania.schemars.Value
+                                                        .Str("Rolling"),
+                                                ),
+                                            )
+                                        this["additionalProperties"] = false
+                                    }.toValue(),
+                                io.github.kotlinmania.schemars
+                                    .jsonSchema {
+                                        this["description"] = "Custom version format."
+                                        this["type"] = "object"
+                                        this["properties"] =
+                                            io.github.kotlinmania.schemars.Value.Object(
+                                                mutableMapOf(
+                                                    "Custom" to
+                                                        generator
+                                                            .subschemaFor(
+                                                                io.github.kotlinmania.schemars.jsonschemaimpls.StringSchema,
+                                                            ).toValue(),
+                                                ),
+                                            )
+                                        this["required"] =
+                                            io.github.kotlinmania.schemars.Value.Array(
+                                                mutableListOf(
+                                                    io.github.kotlinmania.schemars.Value
+                                                        .Str("Custom"),
+                                                ),
+                                            )
+                                        this["additionalProperties"] = false
+                                    }.toValue(),
+                            ),
+                        )
+                }
+        }
 
 internal fun parseVersion(s: String): Triple<ULong, ULong, ULong>? {
     val parts =

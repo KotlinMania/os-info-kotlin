@@ -106,5 +106,40 @@ enum class Bitness {
                     }
                 }
             }
+
+        @OptIn(kotlin.experimental.ExperimentalObjCRefinement::class)
+        @kotlin.native.HiddenFromObjC
+        fun jsonSchema(
+            generator: io.github.kotlinmania.schemars.generate.SchemaGenerator =
+                io.github.kotlinmania.schemars.generate.SchemaGenerator
+                    .default(),
+        ): io.github.kotlinmania.schemars.Schema = jsonSchemaDescriptor.jsonSchema(generator)
     }
 }
+
+@OptIn(kotlin.experimental.ExperimentalObjCRefinement::class)
+@kotlin.native.HiddenFromObjC
+val Bitness.Companion.jsonSchemaDescriptor: io.github.kotlinmania.schemars.JsonSchema
+    get() =
+        object : io.github.kotlinmania.schemars.JsonSchema {
+            override fun schemaName(): String = "Bitness"
+
+            override fun schemaId(): String = "os_info::bitness::Bitness"
+
+            override fun jsonSchema(
+                generator: io.github.kotlinmania.schemars.generate.SchemaGenerator,
+            ): io.github.kotlinmania.schemars.Schema =
+                io.github.kotlinmania.schemars.jsonSchema {
+                    this["description"] =
+                        "Operating system architecture in terms of how many bits compose the basic values it can deal with."
+                    this["type"] = "string"
+                    this["enum"] =
+                        io.github.kotlinmania.schemars.Value.Array(
+                            Bitness.entries
+                                .map {
+                                    io.github.kotlinmania.schemars.Value
+                                        .Str(it.name)
+                                }.toMutableList(),
+                        )
+                }
+        }

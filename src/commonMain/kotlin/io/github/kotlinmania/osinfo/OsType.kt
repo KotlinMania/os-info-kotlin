@@ -231,5 +231,39 @@ enum class OsType {
 
     companion object {
         fun default(): OsType = Unknown
+
+        @OptIn(kotlin.experimental.ExperimentalObjCRefinement::class)
+        @kotlin.native.HiddenFromObjC
+        fun jsonSchema(
+            generator: io.github.kotlinmania.schemars.generate.SchemaGenerator =
+                io.github.kotlinmania.schemars.generate.SchemaGenerator
+                    .default(),
+        ): io.github.kotlinmania.schemars.Schema = jsonSchemaDescriptor.jsonSchema(generator)
     }
 }
+
+@OptIn(kotlin.experimental.ExperimentalObjCRefinement::class)
+@kotlin.native.HiddenFromObjC
+val OsType.Companion.jsonSchemaDescriptor: io.github.kotlinmania.schemars.JsonSchema
+    get() =
+        object : io.github.kotlinmania.schemars.JsonSchema {
+            override fun schemaName(): String = "Type"
+
+            override fun schemaId(): String = "os_info::os_type::Type"
+
+            override fun jsonSchema(
+                generator: io.github.kotlinmania.schemars.generate.SchemaGenerator,
+            ): io.github.kotlinmania.schemars.Schema =
+                io.github.kotlinmania.schemars.jsonSchema {
+                    this["description"] = "A list of supported operating system types."
+                    this["type"] = "string"
+                    this["enum"] =
+                        io.github.kotlinmania.schemars.Value.Array(
+                            OsType.entries
+                                .map {
+                                    io.github.kotlinmania.schemars.Value
+                                        .Str(it.name)
+                                }.toMutableList(),
+                        )
+                }
+        }
