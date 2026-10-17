@@ -172,6 +172,14 @@ data class Info(
          */
         fun default(): Info = unknown()
 
+        @OptIn(kotlin.experimental.ExperimentalObjCRefinement::class)
+        @kotlin.native.HiddenFromObjC
+        fun jsonSchema(
+            generator: io.github.kotlinmania.schemars.generate.SchemaGenerator =
+                io.github.kotlinmania.schemars.generate.SchemaGenerator
+                    .default(),
+        ): io.github.kotlinmania.schemars.Schema = jsonSchemaDescriptor.jsonSchema(generator)
+
         private fun compareNullableStrings(a: String?, b: String?): Int =
             when {
                 a == null && b == null -> 0
@@ -181,3 +189,47 @@ data class Info(
             }
     }
 }
+
+@OptIn(kotlin.experimental.ExperimentalObjCRefinement::class)
+@kotlin.native.HiddenFromObjC
+val Info.Companion.jsonSchemaDescriptor: io.github.kotlinmania.schemars.JsonSchema
+    get() =
+        object : io.github.kotlinmania.schemars.JsonSchema {
+            override fun schemaName(): String = "Info"
+
+            override fun schemaId(): String = "os_info::info::Info"
+
+            override fun jsonSchema(
+                generator: io.github.kotlinmania.schemars.generate.SchemaGenerator,
+            ): io.github.kotlinmania.schemars.Schema =
+                io.github.kotlinmania.schemars.jsonSchema {
+                    this["description"] = "Holds information about operating system (type, version, etc.)."
+                    this["type"] = "object"
+                    val nullableString =
+                        io.github.kotlinmania.schemars.jsonschemaimpls.OptionSchema(
+                            io.github.kotlinmania.schemars.jsonschemaimpls.StringSchema,
+                        )
+                    this["properties"] =
+                        io.github.kotlinmania.schemars.Value.Object(
+                            mutableMapOf(
+                                "os_type" to generator.subschemaFor(OsType.jsonSchemaDescriptor).toValue(),
+                                "version" to generator.subschemaFor(Version.jsonSchemaDescriptor).toValue(),
+                                "edition" to generator.subschemaFor(nullableString).toValue(),
+                                "codename" to generator.subschemaFor(nullableString).toValue(),
+                                "bitness" to generator.subschemaFor(Bitness.jsonSchemaDescriptor).toValue(),
+                                "architecture" to generator.subschemaFor(nullableString).toValue(),
+                            ),
+                        )
+                    this["required"] =
+                        io.github.kotlinmania.schemars.Value.Array(
+                            mutableListOf(
+                                io.github.kotlinmania.schemars.Value
+                                    .Str("os_type"),
+                                io.github.kotlinmania.schemars.Value
+                                    .Str("version"),
+                                io.github.kotlinmania.schemars.Value
+                                    .Str("bitness"),
+                            ),
+                        )
+                }
+        }
